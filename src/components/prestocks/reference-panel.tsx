@@ -94,7 +94,7 @@ export function PreStocksReferencePanel({
           {!catalog.result.ok && catalog.result.assets.length === 0 ? (
             <EmptyState
               title="PreStocks catalog unavailable"
-              description="No market figures are shown. Opportunity records and review history were not changed."
+              description="No market figures are shown. Opportunity records and review history were not changed by this catalog failure."
             />
           ) : null}
 

@@ -50,7 +50,7 @@ async function requestCatalog(path: string): Promise<PreStocksCatalogResult> {
       freshness: "unavailable",
       sourceUrl: path,
       warning:
-        "The PreStocks catalog could not be loaded. Opportunity records and review history were not changed.",
+        "The PreStocks catalog could not be loaded.",
     };
   }
 }

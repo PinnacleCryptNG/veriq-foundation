@@ -119,7 +119,7 @@ export function PreStocksCatalogWorkspace() {
           ) : (
             <EmptyState
               title="PreStocks catalog unavailable"
-              description="No market figures are shown. Opportunity records and review history were not changed. Missing prices are not invented."
+              description="No market figures are shown. Missing prices are not invented."
               actions={
                 <Button
                   type="button"
