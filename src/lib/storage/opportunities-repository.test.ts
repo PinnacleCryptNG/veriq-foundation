@@ -3,6 +3,8 @@ import { demoOpportunities, DEMO_SCENARIO_ID } from "@/data/demo-opportunities";
 import {
   mergeWithDemoSeeds,
   parseStoredOpportunities,
+  emptyOpportunitiesResult,
+  getServerOpportunitiesSnapshot,
 } from "@/lib/storage/opportunities-repository";
 import type { Opportunity } from "@/types/opportunity";
 
@@ -60,5 +62,15 @@ describe("opportunity storage recovery", () => {
     expect(merged.some((item) => item.id === "opp_user_cedar")).toBe(true);
     expect(merged.some((item) => item.id === DEMO_SCENARIO_ID)).toBe(true);
     expect(merged).toHaveLength(1 + demoOpportunities.length);
+  });
+
+  it("serves seeded opportunities on the server instead of an empty loading sentinel", () => {
+    const snapshot = getServerOpportunitiesSnapshot();
+    expect(snapshot).not.toBe(emptyOpportunitiesResult);
+    expect(snapshot.opportunities.map((item) => item.id)).toEqual(
+      expect.arrayContaining([DEMO_SCENARIO_ID]),
+    );
+    expect(snapshot.opportunities.length).toBe(demoOpportunities.length);
+    expect(snapshot.warning).toBeNull();
   });
 });

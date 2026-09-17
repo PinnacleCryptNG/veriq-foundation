@@ -20,14 +20,14 @@ export function PreStocksNotice({ className }: { className?: string }) {
         <span className="font-medium text-foreground">
           Market reference — not submitted evidence.{" "}
         </span>
-        {prestocksLimitation} Official product list:{" "}
+        {prestocksLimitation}{" "}
         <a
           href={PRESTOCKS_PRODUCTS_URL}
-          className="text-foreground underline-offset-4 hover:underline"
+          className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
-          prestocks.com/products
+          Official product list
         </a>
         .
       </p>

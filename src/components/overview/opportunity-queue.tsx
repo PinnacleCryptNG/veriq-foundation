@@ -1,7 +1,7 @@
 "use client";
 
 import { LinkButton } from "@/components/link-button";
-import { Banner, LoadingState } from "@/components/feedback";
+import { Banner, EmptyState, LoadingState } from "@/components/feedback";
 import {
   OpportunityCards,
   OpportunityTable,
@@ -10,10 +10,6 @@ import { useOpportunities } from "@/hooks/use-opportunities";
 
 export function OverviewOpportunityQueue() {
   const { opportunities, isLoading, warning } = useOpportunities();
-
-  if (isLoading) {
-    return <LoadingState label="Loading opportunity queue…" />;
-  }
 
   return (
     <section aria-labelledby="queue-heading" className="space-y-3">
@@ -26,8 +22,9 @@ export function OverviewOpportunityQueue() {
             Opportunity queue
           </h2>
           <p className="text-sm text-muted-foreground">
-            {opportunities.length} records. Status describes intake progress,
-            not a verification result.
+            {isLoading
+              ? "Reading local workspace records."
+              : `${opportunities.length} records. Status describes intake progress, not a verification result.`}
           </p>
         </div>
         <LinkButton href="/opportunities" variant="outline" size="sm">
@@ -35,12 +32,26 @@ export function OverviewOpportunityQueue() {
         </LinkButton>
       </div>
       {warning ? <Banner>{warning}</Banner> : null}
-      <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block">
-        <OpportunityTable opportunities={opportunities} />
-      </div>
-      <div className="md:hidden">
-        <OpportunityCards opportunities={opportunities} />
-      </div>
+      {isLoading ? (
+        <LoadingState label="Loading opportunity queue…" />
+      ) : opportunities.length === 0 ? (
+        <EmptyState
+          title="No opportunities in this workspace"
+          description="Create an opportunity to capture claimed terms. Seeded demo records should appear here unless storage data could not be read."
+          actions={
+            <LinkButton href="/opportunities/new">New opportunity</LinkButton>
+          }
+        />
+      ) : (
+        <>
+          <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block">
+            <OpportunityTable opportunities={opportunities} />
+          </div>
+          <div className="md:hidden">
+            <OpportunityCards opportunities={opportunities} />
+          </div>
+        </>
+      )}
     </section>
   );
 }

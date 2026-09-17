@@ -89,7 +89,7 @@ export function getOpportunitiesSnapshot(): LoadResult {
 }
 
 export function getServerOpportunitiesSnapshot(): LoadResult {
-  return emptyOpportunitiesResult;
+  return serverOpportunitiesSnapshot;
 }
 
 function canUseLocalStorage(): boolean {
@@ -196,6 +196,12 @@ function sortOpportunities(opportunities: Opportunity[]): Opportunity[] {
     return left.companyName.localeCompare(right.companyName);
   });
 }
+
+const serverOpportunitiesSnapshot: LoadResult = {
+  opportunities: sortOpportunities(mergeWithDemoSeeds([])),
+  warning: null,
+  persistError: null,
+};
 
 export function loadOpportunities(): LoadResult {
   const parsed = parseStoredOpportunities(readRaw());

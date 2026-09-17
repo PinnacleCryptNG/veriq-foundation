@@ -24,6 +24,8 @@ export function useOpportunities() {
     getOpportunitiesSnapshot,
     getServerOpportunitiesSnapshot,
   );
+  // Empty sentinel means "not yet a real snapshot". The server snapshot is the
+  // seeded demo list, so SSR HTML is the queue rather than a stuck loading label.
   const isLoading = result === emptyOpportunitiesResult;
 
   const create = useCallback((input: OpportunityIntake) => {
