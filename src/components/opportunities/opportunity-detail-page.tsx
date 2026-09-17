@@ -103,6 +103,7 @@ export function OpportunityDetailPage({
         />
         <DetailCard
           title="Seller / intermediary"
+          columns={1}
           rows={[
             ["Name", opportunity.sellerOrIntermediary],
             [
@@ -153,11 +154,13 @@ function DetailCard({
   title,
   description,
   rows,
+  columns = 2,
 }: {
   id?: string;
   title: string;
   description?: string;
   rows: Array<[string, string]>;
+  columns?: 1 | 2;
 }) {
   return (
     <section
@@ -170,7 +173,13 @@ function DetailCard({
       {description ? (
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       ) : null}
-      <dl className="mt-3 grid gap-2 sm:grid-cols-2">
+      <dl
+        className={
+          columns === 2
+            ? "mt-3 grid gap-2 sm:grid-cols-2"
+            : "mt-3 grid gap-2"
+        }
+      >
         {rows.map(([label, value]) => (
           <div key={label}>
             <dt className="text-[11px] tracking-wide text-muted-foreground uppercase">
