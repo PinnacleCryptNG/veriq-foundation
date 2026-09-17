@@ -1,27 +1,36 @@
 import { assessReviewReadiness } from "@/lib/review-readiness";
 import { LinkButton } from "@/components/link-button";
+import { SectionHeading } from "@/components/section-heading";
 import type { Opportunity } from "@/types/opportunity";
 
-export function ReviewReadiness({ opportunity }: { opportunity: Opportunity }) {
+export function ReviewReadiness({
+  opportunity,
+  context = "detail",
+}: {
+  opportunity: Opportunity;
+  context?: "detail" | "review";
+}) {
   const readiness = assessReviewReadiness(opportunity);
 
   return (
     <section className="rounded-lg border border-border bg-card p-4">
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h2 className="text-sm font-medium text-foreground">
-            Review readiness
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Input-completeness guide only. It is not a risk score, verification
-            verdict, or finding state. The engine still produces the review
-            results.
+      <SectionHeading
+        title={
+          context === "review"
+            ? "Current structured inputs"
+            : "Review readiness"
+        }
+        description={
+          context === "review"
+            ? "This is input completeness for the opportunity as it stands now. It is not this snapshot’s finding states, a risk score, or a verification verdict."
+            : "Input-completeness guide only. It is not a risk score, verification verdict, or finding state. The engine still produces the review results."
+        }
+        actions={
+          <p className="text-xs text-muted-foreground">
+            {readiness.readyCount} with required fields · {readiness.needsInputCount} missing values
           </p>
-        </div>
-        <p className="text-xs text-muted-foreground">
-          {readiness.readyCount} ready · {readiness.needsInputCount} need structured values
-        </p>
-      </div>
+        }
+      />
       <ul className="mt-3 space-y-2">
         {readiness.checks.map((check) => (
           <li
@@ -34,7 +43,7 @@ export function ReviewReadiness({ opportunity }: { opportunity: Opportunity }) {
               </p>
               <span className="text-[11px] tracking-wide text-muted-foreground uppercase">
                 {check.status === "ready"
-                  ? "Enough input to run"
+                  ? "Structured fields present"
                   : "Needs structured values"}
               </span>
             </div>

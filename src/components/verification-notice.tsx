@@ -16,11 +16,11 @@ export function VerificationNotice({ className }: { className?: string }) {
       />
       <p>
         <span className="font-medium text-foreground">
-          Verification has not been performed.{" "}
+          Intake status is not a review finding.{" "}
         </span>
-        Status describes intake and evidence collection only. It is not a
-        finding, approval, authenticity determination, or assessment of
-        investment safety.
+        It only describes whether claimed materials have been collected. It is
+        not approval, authenticity, ownership, or an assessment of investment
+        safety.
       </p>
     </div>
   );

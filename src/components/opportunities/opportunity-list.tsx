@@ -52,7 +52,7 @@ export function OpportunityTable({
                     />
                   ) : null}
                 </span>
-                <span className="max-w-xs text-xs leading-4 whitespace-normal text-muted-foreground">
+                <span className="max-w-xs text-xs leading-4 whitespace-normal break-words text-muted-foreground">
                   {opportunity.claimedSummary}
                 </span>
               </div>
@@ -112,7 +112,7 @@ export function OpportunityCards({
               </div>
               <StatusBadge status={opportunity.status} />
             </div>
-            <p className="mt-2 text-sm leading-5 text-muted-foreground">
+            <p className="mt-2 text-sm leading-5 break-words text-muted-foreground">
               {opportunity.claimedSummary}
             </p>
             <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-muted-foreground">

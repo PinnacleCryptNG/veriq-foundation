@@ -21,7 +21,7 @@ export function OverviewOpportunityQueue() {
         <div className="space-y-1">
           <h2
             id="queue-heading"
-            className="text-sm font-medium tracking-wide text-foreground uppercase"
+            className="text-sm font-medium text-foreground"
           >
             Opportunity queue
           </h2>
@@ -35,7 +35,7 @@ export function OverviewOpportunityQueue() {
         </LinkButton>
       </div>
       {warning ? <Banner>{warning}</Banner> : null}
-      <div className="hidden overflow-hidden rounded-lg border border-border bg-card md:block">
+      <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block">
         <OpportunityTable opportunities={opportunities} />
       </div>
       <div className="md:hidden">

@@ -29,7 +29,7 @@ export function Sidebar() {
         <SidebarNav />
       </div>
       <p className="border-t border-sidebar-border px-4 py-3 text-[11px] leading-4 text-muted-foreground">
-        Analyst workspace. Review has not run on any record.
+        Analyst workspace. Local demo review — not independent verification.
       </p>
     </aside>
   );

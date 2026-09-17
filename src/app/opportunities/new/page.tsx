@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
 import { OpportunityIntakeForm } from "@/components/opportunities/opportunity-intake-form";
+import { PageContainer } from "@/components/page-container";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
 import { VerificationNotice } from "@/components/verification-notice";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function NewOpportunityPage() {
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+    <PageContainer width="3xl">
       <PageHeader
         title="New opportunity"
         description="Capture claimed terms for a private-market opportunity. Saving stores a local demo record. It does not start verification."
@@ -30,6 +31,6 @@ export default function NewOpportunityPage() {
       <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
         <OpportunityIntakeForm />
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -5,15 +5,18 @@ import { EmptyState, LoadingState, Banner } from "@/components/feedback";
 import { DemoBadge } from "@/components/opportunities/demo-badge";
 import { EvidenceSection } from "@/components/opportunities/evidence-section";
 import { StatusBadge } from "@/components/opportunities/status-badge";
-import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
+import { PageContainer } from "@/components/page-container";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
+import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
 import { ReviewReadiness } from "@/components/review/review-readiness";
 import { VerificationNotice } from "@/components/verification-notice";
-import { isDemoScenario } from "@/data/demo-opportunities";
+import { DEMO_SCENARIO_ID, isDemoScenario } from "@/data/demo-opportunities";
 import { useOpportunities } from "@/hooks/use-opportunities";
+import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
+import { useVerificationRuns } from "@/hooks/use-verification-runs";
 import {
   formatClaimedPrice,
   formatDate,
@@ -36,38 +39,46 @@ export function OpportunityDetailPage({
     removeEvidence,
     updateEvidenceDetails,
   } = useOpportunities();
+  const { latest } = useVerificationRuns(opportunityId);
   const opportunity = getById(opportunityId);
+
+  useScrollToHash(`${opportunity?.id ?? opportunityId}:${opportunity?.updatedAt ?? ""}`);
 
   if (isLoading) {
     return (
-      <div className="mx-auto w-full max-w-4xl px-4 py-6 sm:px-6 lg:px-8">
+      <PageContainer>
         <LoadingState label="Loading opportunity…" />
-      </div>
+      </PageContainer>
     );
   }
 
   if (!opportunity) {
     return (
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+      <PageContainer>
         <PageHeader
           title="Opportunity not found"
-          description="This record is not in the local workspace. It may have been cleared from this browser."
-          actions={
-            <LinkButton href="/opportunities" variant="outline">
-              Back to opportunities
-            </LinkButton>
-          }
+          description="This ID is not in the local workspace. It may have been cleared from this browser, or the address may be incomplete."
         />
         <EmptyState
           title="No matching record"
-          description="Seeded demo opportunities and records created in this browser appear in the opportunities list."
+          description="Seeded demo opportunities and records created in this browser appear in the opportunities list. Unreadable storage is ignored without deleting records that can still be read."
+          actions={
+            <>
+              <LinkButton href="/opportunities" variant="outline">
+                Back to opportunities
+              </LinkButton>
+              <LinkButton href={`/opportunities/${DEMO_SCENARIO_ID}`}>
+                Open Lumen Harbor Analytics
+              </LinkButton>
+            </>
+          }
         />
-      </div>
+      </PageContainer>
     );
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+    <PageContainer>
       <PageHeader
         title={opportunity.companyName}
         description={opportunity.claimedSummary}
@@ -94,10 +105,18 @@ export function OpportunityDetailPage({
       />
 
       <VerificationNotice />
-      <LimitationNotice />
+      {opportunity.isDemo && !isDemoScenario(opportunity.id) ? <DemoNotice /> : null}
+      {isDemoScenario(opportunity.id) ? (
+        <>
+          <DemoScenarioNotice compact />
+          <DemoWalkthroughHint
+            surface="detail"
+            opportunity={opportunity}
+            latestRun={latest}
+          />
+        </>
+      ) : null}
       <PersistenceNotice />
-      {opportunity.isDemo ? <DemoNotice /> : null}
-      {isDemoScenario(opportunity.id) ? <DemoScenarioNotice compact /> : null}
       {warning ? <Banner>{warning}</Banner> : null}
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
 
@@ -132,7 +151,7 @@ export function OpportunityDetailPage({
 
       <DetailCard
         title="Quoted deal terms"
-        description="These figures are claimed intake values. They are not appraised, issuer-confirmed, or verified."
+        description="These figures are claimed intake values. They are not appraised, issuer-confirmed, extracted, or independently verified."
         rows={[
           ["Quantity offered", formatQuantity(opportunity)],
           ["Quoted price", formatClaimedPrice(opportunity)],
@@ -145,7 +164,7 @@ export function OpportunityDetailPage({
           <h2 className="text-sm font-medium text-foreground">
             Missing materials noted at intake
           </h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 break-words text-muted-foreground">
             {opportunity.missingMaterials.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -153,7 +172,9 @@ export function OpportunityDetailPage({
         </section>
       ) : null}
 
-      <p className="text-sm text-muted-foreground">{opportunity.limitationNote}</p>
+      <p className="text-sm leading-6 break-words text-muted-foreground">
+        {opportunity.limitationNote}
+      </p>
 
       <ReviewReadiness opportunity={opportunity} />
 
@@ -164,7 +185,7 @@ export function OpportunityDetailPage({
         onRemove={removeEvidence}
         onUpdateDetails={updateEvidenceDetails}
       />
-    </div>
+    </PageContainer>
   );
 }
 
@@ -204,7 +225,7 @@ function DetailCard({
             <dt className="text-[11px] tracking-wide text-muted-foreground uppercase">
               {label}
             </dt>
-            <dd className="mt-0.5 text-sm text-foreground">{value}</dd>
+            <dd className="mt-0.5 text-sm break-words text-foreground">{value}</dd>
           </div>
         ))}
       </dl>

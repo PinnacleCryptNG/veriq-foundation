@@ -8,6 +8,7 @@ import {
   verificationRunSchema,
   type VerificationRun,
 } from "@/types/verification";
+import { extractStoredList } from "@/lib/storage/recover-stored-list";
 
 export type VerificationLoadResult = {
   runs: VerificationRun[];
@@ -89,18 +90,28 @@ export function parseStoredVerificationRuns(raw: string | null): {
     };
   }
 
-  const stored = storedVerificationStateSchema.safeParse(parsed);
-  if (!stored.success) {
-    return {
-      runs: [],
-      warning:
-        "Saved review runs were malformed and were ignored. Opportunity records were not changed.",
-    };
+  const extracted = extractStoredList(parsed, "runs");
+  if (
+    extracted.items.length === 0 &&
+    extracted.warning === null &&
+    parsed &&
+    typeof parsed === "object" &&
+    !("runs" in parsed) &&
+    !Array.isArray(parsed)
+  ) {
+    const stored = storedVerificationStateSchema.safeParse(parsed);
+    if (!stored.success) {
+      return {
+        runs: [],
+        warning:
+          "Saved review runs were malformed and were ignored. Opportunity records were not changed.",
+      };
+    }
   }
 
   const runs: VerificationRun[] = [];
   let skipped = 0;
-  for (const item of stored.data.runs) {
+  for (const item of extracted.items) {
     const result = verificationRunSchema.safeParse(item);
     if (result.success) {
       runs.push(result.data);
@@ -109,12 +120,16 @@ export function parseStoredVerificationRuns(raw: string | null): {
     }
   }
 
+  const warnings = [
+    extracted.warning,
+    skipped > 0
+      ? `${skipped} stored review ${skipped === 1 ? "run" : "runs"} could not be read and ${skipped === 1 ? "was" : "were"} skipped.`
+      : null,
+  ].filter(Boolean);
+
   return {
     runs,
-    warning:
-      skipped > 0
-        ? `${skipped} stored review ${skipped === 1 ? "run" : "runs"} could not be read and ${skipped === 1 ? "was" : "were"} skipped.`
-        : null,
+    warning: warnings.length > 0 ? warnings.join(" ") : null,
   };
 }
 

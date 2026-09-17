@@ -142,15 +142,15 @@ export function EvidenceSection({
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="space-y-1">
-                  <p className="font-medium text-foreground">
+                  <p className="font-medium break-words text-foreground">
                     {item.displayName}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs break-all text-muted-foreground">
                     {evidenceTypeLabels[item.type]} · Added{" "}
                     {formatDate(item.createdAt)} · {item.id}
                   </p>
                   {item.description ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm leading-6 break-words text-muted-foreground">
                       {item.description}
                     </p>
                   ) : null}
@@ -190,6 +190,14 @@ export function EvidenceSection({
                 </Button>
               </div>
               <div className="mt-3">
+                {item.id === "evd_demo_lumen_tx" &&
+                !item.structuredDetails?.transaction?.statedTotal ? (
+                  <p className="mb-2 text-xs leading-5 text-muted-foreground">
+                    Walkthrough: after the first review run, enter stated payment
+                    7225.00 from the synthetic figures (400 × 18.00 + 25.00). Do
+                    not guess a different amount.
+                  </p>
+                ) : null}
                 <StructuredDetailsEditor
                   evidenceId={item.id}
                   evidenceType={item.type}

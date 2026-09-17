@@ -52,6 +52,43 @@ describe("verification run repository", () => {
     expect(parsed.warning).toMatch(/unreadable/);
   });
 
+  it("recovers readable runs when the storage version is unexpected", () => {
+    const payload = JSON.stringify({
+      version: 99,
+      runs: [
+        {
+          id: "run_old",
+          opportunityId: "opp_old",
+          timestamp: "2026-09-17T10:00:00.000Z",
+          rulesetVersion: RULESET_VERSION,
+          findings: [
+            {
+              id: "finding-R05",
+              ruleId: "R05",
+              category: "evidence_completeness",
+              title: "Some checks could not run",
+              state: "insufficient_evidence",
+              explanation: "Missing structured values.",
+              comparedFields: [],
+              evidenceIds: [],
+              missingInformation: ["Structured security type"],
+              limitation: "Demo limitation.",
+            },
+          ],
+          summary: {
+            consistent: 0,
+            attention: 0,
+            insufficient_evidence: 1,
+            not_assessed: 0,
+          },
+        },
+      ],
+    });
+    const parsed = parseStoredVerificationRuns(payload);
+    expect(parsed.runs).toHaveLength(1);
+    expect(parsed.warning).toMatch(/unexpected storage version/);
+  });
+
   it("accepts older runs that omit the snapshot fields", () => {
     const payload = JSON.stringify({
       version: 1,

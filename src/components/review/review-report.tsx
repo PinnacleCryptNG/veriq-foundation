@@ -1,5 +1,6 @@
 import { FindingStateBadge } from "@/components/review/finding-state-badge";
-import { formatDateTime, verificationStateLabels } from "@/lib/format";
+import { SectionHeading } from "@/components/section-heading";
+import { formatDateTime, verificationStateHelp, verificationStateLabels } from "@/lib/format";
 import type {
   Finding,
   VerificationRun,
@@ -27,30 +28,26 @@ export function ReviewReport({
 
   return (
     <section className="rounded-lg border border-border bg-card p-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h2 className="text-sm font-medium text-foreground">Review summary</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {companyName} · {formatDateTime(run.timestamp)} · Ruleset{" "}
-            {run.rulesetVersion}
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {STATE_ORDER.map((state) => (
-            <span
-              key={state}
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"
-            >
-              <FindingStateBadge state={state} />
-              {run.summary[state]}
-            </span>
-          ))}
-        </div>
-      </div>
+      <SectionHeading
+        title="Review summary"
+        description={`${companyName} · ${formatDateTime(run.timestamp)} · Ruleset ${run.rulesetVersion}`}
+        actions={
+          <div className="flex flex-wrap gap-2">
+            {STATE_ORDER.map((state) => (
+              <span
+                key={state}
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"
+              >
+                <FindingStateBadge state={state} />
+                {run.summary[state]}
+              </span>
+            ))}
+          </div>
+        }
+      />
 
       <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        Consistent findings mean entered values matched for that check. They do
-        not establish legitimacy, safety, ownership, or legal transferability.
+        {verificationStateHelp.consistent}
       </p>
 
       <div className="mt-4 grid gap-3 lg:grid-cols-2">

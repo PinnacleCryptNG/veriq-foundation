@@ -16,10 +16,12 @@ export function LoadingState({ label }: { label: string }) {
 export function EmptyState({
   title,
   description,
+  actions,
   className,
 }: {
   title: string;
   description: string;
+  actions?: ReactNode;
   className?: string;
 }) {
   return (
@@ -31,6 +33,11 @@ export function EmptyState({
     >
       <p className="text-sm font-medium text-foreground">{title}</p>
       <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+      {actions ? (
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          {actions}
+        </div>
+      ) : null}
     </div>
   );
 }

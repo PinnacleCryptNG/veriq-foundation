@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import { DemoNotice } from "@/components/demo-notice";
 import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
+import { PageContainer } from "@/components/page-container";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
 import { OverviewOpportunityQueue } from "@/components/overview/opportunity-queue";
 import { ReviewSurfaceGrid } from "@/components/overview/review-surface-grid";
-import { VerificationNotice } from "@/components/verification-notice";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
+import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function OverviewPage() {
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
+    <PageContainer width="6xl">
       <PageHeader
         title="Workspace"
         description="Compare private-market deal claims against submitted evidence. Intake and review runs stay in this browser."
@@ -35,9 +35,8 @@ export default function OverviewPage() {
       />
 
       <LimitationNotice />
-      <VerificationNotice />
       <PersistenceNotice />
-      <DemoNotice />
+      <DemoWalkthroughHint surface="overview" />
       <DemoScenarioNotice />
 
       <section className="grid gap-3 lg:grid-cols-3">
@@ -62,6 +61,6 @@ export default function OverviewPage() {
 
       <ReviewSurfaceGrid />
       <OverviewOpportunityQueue />
-    </div>
+    </PageContainer>
   );
 }

@@ -6,4 +6,4 @@ export const VERIFICATION_STORAGE_VERSION = 1;
 export const MAX_RUNS_PER_OPPORTUNITY = 20;
 
 export const userRecordLimitation =
-  "Verification has not been performed. Files stored in this browser are submitted materials for a local demo. They do not establish authenticity, ownership, issuer approval, or investment safety.";
+  "Intake status is not a review finding. Files stored in this browser are submitted materials for a local demo. They do not establish authenticity, ownership, issuer approval, or investment safety.";

@@ -50,7 +50,16 @@ npm run build
 
 Findings use only **explicitly entered structured values**. Filenames, MIME types, descriptions, and file bytes are not read as document contents.
 
-Outcomes are limited to **Consistent**, **Attention**, **Insufficient evidence**, and **Not assessed**. There is no Verified, safe, or approved result.
+## Finding states
+
+| State | Meaning |
+| --- | --- |
+| Consistent | That specific comparison of entered values matched. Not legitimacy, safety, or ownership. |
+| Attention | A mismatch or reported restriction in entered values. Not proof of fraud. |
+| Insufficient evidence | Required structured inputs were missing. |
+| Not assessed | The check did not confirm the claim. Not a successful result. |
+
+Input completeness is a field checklist. It is not a risk score or verification verdict.
 
 ## Guided demo scenario
 

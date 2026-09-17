@@ -1,12 +1,11 @@
 "use client";
 
-import { DemoNotice } from "@/components/demo-notice";
 import { EmptyState, LoadingState, Banner } from "@/components/feedback";
 import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
+import { PageContainer } from "@/components/page-container";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
-import { VerificationNotice } from "@/components/verification-notice";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import {
   OpportunityCards,
@@ -20,7 +19,7 @@ export function OpportunitiesWorkspace() {
   const createdCount = opportunities.length - demoCount;
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+    <PageContainer width="6xl">
       <PageHeader
         title="Opportunities"
         description="Private-market records captured for review. Status tracks intake and evidence collection only. It is not a verification verdict."
@@ -30,9 +29,7 @@ export function OpportunitiesWorkspace() {
       />
 
       <LimitationNotice />
-      <VerificationNotice />
       <PersistenceNotice />
-      <DemoNotice />
       <DemoScenarioNotice />
       {warning ? <Banner>{warning}</Banner> : null}
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
@@ -43,6 +40,9 @@ export function OpportunitiesWorkspace() {
         <EmptyState
           title="No opportunities in this workspace"
           description="Create an opportunity to capture claimed terms. Seeded demo records should appear here unless storage data could not be read."
+          actions={
+            <LinkButton href="/opportunities/new">New opportunity</LinkButton>
+          }
         />
       ) : (
         <>
@@ -51,7 +51,7 @@ export function OpportunitiesWorkspace() {
             created in this browser). Evidence counts are local records, not
             authenticated documents.
           </p>
-          <div className="hidden overflow-hidden rounded-lg border border-border bg-card md:block">
+          <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block">
             <OpportunityTable opportunities={opportunities} />
           </div>
           <div className="md:hidden">
@@ -59,6 +59,6 @@ export function OpportunitiesWorkspace() {
           </div>
         </>
       )}
-    </div>
+    </PageContainer>
   );
 }

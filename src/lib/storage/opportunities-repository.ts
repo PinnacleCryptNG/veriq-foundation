@@ -8,11 +8,11 @@ import {
 import { createId, nowIso } from "@/lib/ids";
 import { deriveIntakeStatus } from "@/lib/opportunity-status";
 import { formatFileSize } from "@/lib/format";
+import { extractStoredList } from "@/lib/storage/recover-stored-list";
 import {
   evidenceIntakeSchema,
   opportunityIntakeSchema,
   opportunitySchema,
-  storedStateSchema,
   type Evidence,
   type EvidenceIntake,
   type Opportunity,
@@ -139,23 +139,23 @@ export function parseStoredOpportunities(raw: string | null): {
     return {
       records: [],
       warning:
-        "Saved workspace data was unreadable and was ignored. Seeded demo records are still available.",
+        "Saved workspace data was unreadable and was ignored. Seeded demo records are still available. Other readable browser data was not changed.",
     };
   }
 
-  const stored = storedStateSchema.safeParse(parsed);
-  if (!stored.success) {
+  const extracted = extractStoredList(parsed, "opportunities");
+  if (extracted.items.length === 0 && extracted.warning === null && parsed && typeof parsed === "object" && !("opportunities" in parsed) && !Array.isArray(parsed)) {
     return {
       records: [],
       warning:
-        "Saved workspace data was malformed and was ignored. Seeded demo records are still available.",
+        "Saved workspace data was malformed and was ignored. Seeded demo records are still available. Other readable browser data was not changed.",
     };
   }
 
   const records: Opportunity[] = [];
   let skipped = 0;
 
-  for (const item of stored.data.opportunities) {
+  for (const item of extracted.items) {
     const result = opportunitySchema.safeParse(item);
     if (result.success) {
       records.push(result.data);
@@ -164,16 +164,20 @@ export function parseStoredOpportunities(raw: string | null): {
     }
   }
 
+  const warnings = [
+    extracted.warning,
+    skipped > 0
+      ? `${skipped} stored ${skipped === 1 ? "record" : "records"} could not be read and ${skipped === 1 ? "was" : "were"} skipped.`
+      : null,
+  ].filter(Boolean);
+
   return {
     records,
-    warning:
-      skipped > 0
-        ? `${skipped} stored ${skipped === 1 ? "record" : "records"} could not be read and ${skipped === 1 ? "was" : "were"} skipped.`
-        : null,
+    warning: warnings.length > 0 ? warnings.join(" ") : null,
   };
 }
 
-function mergeWithSeeds(stored: Opportunity[]): Opportunity[] {
+export function mergeWithDemoSeeds(stored: Opportunity[]): Opportunity[] {
   const storedIds = new Set(stored.map((record) => record.id));
   const missingSeeds = demoOpportunities.filter(
     (opportunity) => !storedIds.has(opportunity.id),
@@ -196,7 +200,7 @@ function sortOpportunities(opportunities: Opportunity[]): Opportunity[] {
 export function loadOpportunities(): LoadResult {
   const parsed = parseStoredOpportunities(readRaw());
   return {
-    opportunities: sortOpportunities(mergeWithSeeds(parsed.records)),
+    opportunities: sortOpportunities(mergeWithDemoSeeds(parsed.records)),
     warning: parsed.warning,
     persistError: lastPersistError,
   };

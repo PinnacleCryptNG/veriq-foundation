@@ -91,6 +91,17 @@ export const verificationStateLabels: Record<VerificationState, string> = {
   not_assessed: "Not assessed",
 };
 
+export const verificationStateHelp: Record<VerificationState, string> = {
+  consistent:
+    "This specific comparison of entered values matched. It is not a legitimacy, safety, ownership, or investment conclusion.",
+  attention:
+    "A mismatch or reported restriction was found in entered values. That is a condition to review, not proof of fraud or wrongdoing.",
+  insufficient_evidence:
+    "Required structured inputs were missing, so this check could not compare the values it needs.",
+  not_assessed:
+    "This check did not confirm the claim. It is not a successful result.",
+};
+
 export const findingCategoryLabels: Record<FindingCategory, string> = {
   security_representation: "Security representation",
   transferability: "Transferability",

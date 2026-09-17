@@ -40,17 +40,17 @@ export function FindingCard({
   return (
     <li className="rounded-lg border border-border bg-card p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <div>
+        <div className="min-w-0">
           <p className="text-xs text-muted-foreground">
             {finding.ruleId} · {findingCategoryLabels[finding.category]}
           </p>
-          <h3 className="mt-1 text-sm font-medium text-foreground">
+          <h3 className="mt-1 text-sm font-medium break-words text-foreground">
             {finding.title}
           </h3>
         </div>
         <FindingStateBadge state={finding.state} />
       </div>
-      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+      <p className="mt-2 text-sm leading-6 break-words text-muted-foreground">
         {finding.explanation}
       </p>
       <dl className="mt-3 space-y-2 text-xs">
@@ -83,9 +83,9 @@ export function FindingCard({
             ) : (
               <ul className="space-y-1">
                 {usedEvidence.map((item) => (
-                  <li key={item.id} className="flex flex-wrap items-center gap-2">
-                    <span className="text-foreground">{item.displayName}</span>
-                    <span className="text-muted-foreground">{item.id}</span>
+                  <li key={item.id} className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
+                    <span className="break-words text-foreground">{item.displayName}</span>
+                    <span className="break-all text-muted-foreground">{item.id}</span>
                     {item.present ? (
                       <>
                         <LinkButton
@@ -132,7 +132,14 @@ export function FindingCard({
           <dt className="tracking-wide text-muted-foreground uppercase">
             Rule limitation
           </dt>
-          <dd className="mt-0.5 text-muted-foreground">{finding.limitation}</dd>
+          <dd className="mt-0.5">
+            <details className="text-muted-foreground">
+              <summary className="cursor-pointer text-foreground">
+                This check is not independent verification
+              </summary>
+              <p className="mt-1 leading-5">{finding.limitation}</p>
+            </details>
+          </dd>
         </div>
       </dl>
     </li>

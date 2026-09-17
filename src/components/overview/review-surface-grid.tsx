@@ -7,13 +7,14 @@ export function ReviewSurfaceGrid() {
       <div className="space-y-1">
         <h2
           id="review-surfaces-heading"
-          className="text-sm font-medium tracking-wide text-foreground uppercase"
+            className="text-sm font-medium text-foreground"
         >
           What review will examine
         </h2>
         <p className="text-sm text-muted-foreground">
-          These surfaces are not populated yet. The verification engine is not
-          part of this foundation.
+          After you run checks, findings appear in the review workspace. They
+          compare entered claims with entered structured values. They do not
+          establish ownership, authenticity, or investment quality.
         </p>
       </div>
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
