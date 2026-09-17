@@ -11,9 +11,9 @@ export function DemoNotice({ className }: { className?: string }) {
       )}
     >
       <p>
-        <span className="font-medium text-foreground">Demo data.</span> These
-        records are seeded for layout and navigation. They are not live
-        opportunities, and {siteConfig.name} has not reviewed or verified them.
+        <span className="font-medium text-foreground">Demo data.</span> Seeded
+        records are labeled Demo. They are not live opportunities, and{" "}
+        {siteConfig.name} has not reviewed or verified them.
       </p>
     </div>
   );
