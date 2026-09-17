@@ -3,33 +3,44 @@ import { prestocksCatalogResultSchema } from "@/lib/prestocks/schema";
 
 export const dynamic = "force-dynamic";
 
+function jsonResult(
+  result: ReturnType<typeof prestocksCatalogResultSchema.parse>,
+  status: number,
+) {
+  return Response.json(result, {
+    status,
+    headers: { "Cache-Control": "no-store" },
+  });
+}
+
 export async function GET(
-  _request: Request,
+  request: Request,
   context: { params: Promise<{ symbol: string }> },
 ) {
   const { symbol } = await context.params;
-  const catalog = prestocksCatalogResultSchema.parse(await fetchPreStocksCatalog());
+  const forceRefresh = new URL(request.url).searchParams.get("refresh") === "1";
+  const catalog = prestocksCatalogResultSchema.parse(
+    await fetchPreStocksCatalog({ forceRefresh }),
+  );
   const asset = findAssetBySymbol(catalog.assets, symbol);
+  const missing = `No PreStocks asset with symbol ${symbol.trim().toUpperCase()} is in the retrieved catalog. This app does not call an undocumented per-asset PreStocks endpoint.`;
 
   if (!asset) {
-    return Response.json(
+    return jsonResult(
       {
         ...catalog,
-        ok: catalog.ok,
         assets: [],
-        warning:
-          catalog.warning ??
-          `No PreStocks asset with symbol ${symbol.trim().toUpperCase()} is in the retrieved catalog. This app does not call an undocumented per-asset PreStocks endpoint.`,
+        warning: catalog.warning ? `${catalog.warning} ${missing}` : missing,
       },
-      { status: catalog.ok ? 404 : 502 },
+      catalog.ok ? 404 : 502,
     );
   }
 
-  return Response.json(
+  return jsonResult(
     {
       ...catalog,
       assets: [asset],
     },
-    { status: 200 },
+    200,
   );
 }

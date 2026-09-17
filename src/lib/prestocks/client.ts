@@ -69,13 +69,14 @@ export async function fetchPreStocksCatalog(options?: {
   now?: () => number;
   cacheTtlMs?: number;
   catalogUrl?: string;
+  forceRefresh?: boolean;
 }): Promise<PreStocksCatalogResult> {
   const nowMs = options?.now?.() ?? Date.now();
   const sourceUrl = options?.catalogUrl ?? prestocksCatalogUrl();
   const ttl = options?.cacheTtlMs ?? CACHE_TTL_MS;
   const fetcher = options?.fetcher ?? fetch;
 
-  if (cache && nowMs - cache.fetchedAtMs < ttl) {
+  if (!options?.forceRefresh && cache && nowMs - cache.fetchedAtMs < ttl) {
     return fromCache(
       cache,
       nowMs,

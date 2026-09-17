@@ -30,9 +30,9 @@ export function FreshnessBanner({
   if (freshness === "stale") {
     return (
       <Banner tone="danger">
-        Stale PreStocks snapshot. Retrieved {retrieved}; shown at {served}.{" "}
-        {warning} This is labeled stale on purpose. Missing live data was not
-        replaced silently.
+        Stale PreStocks snapshot — not live data. VERIQ last retrieved it at{" "}
+        {retrieved}; shown at {served}. {warning} Missing live data was not
+        replaced with invented prices.
       </Banner>
     );
   }
@@ -40,15 +40,18 @@ export function FreshnessBanner({
   if (freshness === "cached") {
     return (
       <Banner>
-        Cached PreStocks snapshot. Retrieved {retrieved}; shown at {served}.{" "}
-        {warning} Source: {sourceUrl}.
+        Cached PreStocks snapshot — not a new live fetch. VERIQ retrieved it at{" "}
+        {retrieved}; shown at {served}. {warning} Source: {sourceUrl}. The
+        payload has no exchange timestamp.
       </Banner>
     );
   }
 
   return (
     <Banner>
-      Live PreStocks catalog. Retrieved {retrieved}. Source: {sourceUrl}.
+      Live PreStocks catalog. VERIQ retrieved this snapshot at {retrieved}.
+      That is not an exchange or market-data timestamp — the PreStocks payload
+      does not include one. Source: {sourceUrl}.
       {warning ? ` ${warning}` : ""}
     </Banner>
   );

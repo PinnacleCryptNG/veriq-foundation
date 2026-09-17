@@ -16,10 +16,11 @@ const loadingResult: PreStocksCatalogResult = {
   warning: null,
 };
 
-function catalogPath(symbol?: string) {
-  return symbol
+function catalogPath(symbol?: string, refresh = false) {
+  const path = symbol
     ? `/api/market/prestocks/${encodeURIComponent(symbol)}`
     : "/api/market/prestocks";
+  return refresh ? `${path}?refresh=1` : path;
 }
 
 async function requestCatalog(path: string): Promise<PreStocksCatalogResult> {
@@ -74,7 +75,7 @@ export function usePreStocksCatalog(symbol?: string) {
 
   const reload = useCallback(async () => {
     setIsLoading(true);
-    const next = await requestCatalog(catalogPath(symbol));
+    const next = await requestCatalog(catalogPath(symbol, true));
     setResult(next);
     setIsLoading(false);
   }, [symbol]);

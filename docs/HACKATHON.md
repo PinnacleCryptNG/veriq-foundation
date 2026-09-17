@@ -94,82 +94,75 @@ What still must be confirmed from other official materials: submission format, d
 
 # Live demo script (2–3 minutes)
 
-Match this script to the current UI. Button labels in **bold** exist in the app. Do not pre-fill stated payment `7225.00`.
+Match this script to the current UI. Labels in **bold** exist in the app. Do not pre-fill stated payment. The field placeholder is **If stated**, not a saved value.
 
 ## 0. Before you start (off-camera)
 
 - `npm run dev` → [http://127.0.0.1:43147](http://127.0.0.1:43147)
-- Prefer a browser profile without a leftover Lumen stated payment. If **Stated payment amount** already shows `7225.00`, clear that field and save, or use a clean profile, so the first run still shows Insufficient evidence on R04/R05.
+- If **Stated payment amount** already contains `7225.00` from a prior run, clear it and click **Save structured details**, or use a clean browser profile, so the first **Run checks** still shows Insufficient evidence on R04/R05.
 
-## 1. Introduce VERIQ (~25 seconds) — Overview (`/`)
+## 1. Introduce VERIQ (~20 seconds) — Overview (`/`)
 
-**Say:** “VERIQ is a local review workspace for private and pre-IPO equity packets. It compares claimed deal terms with structured values a reviewer types from submitted materials. It is not issuer confirmation, and it does not prove ownership, authenticity, or that an investment is safe.”
+**Say:** “VERIQ is a local review workspace for private and pre-IPO packets. It compares claimed terms with structured values a reviewer types. It does not prove ownership, authenticity, or that an investment is safe.”
 
-**Do:** Stay on **Overview**. Point to **About this workspace**, then **Implemented checks · ruleset 2026.09.1** (R01–R05).
+**Do:** Point to **About this workspace**, **Implemented checks · ruleset 2026.09.1**, and the **Market reference — not submitted evidence** notice.
 
-**Say:** “Five deterministic checks. Findings are Consistent, Attention, Insufficient evidence, or Not assessed. Consistent means the entered numbers matched — not that the deal is verified.”
+**Say:** “Five deterministic checks. Consistent means entered numbers matched — not that the deal is verified. PreStocks is a separate catalog, not a finding.”
 
-## 2. Open the synthetic packet (~20 seconds)
+## 2. PreStocks catalog (~25 seconds)
 
-**Do:** Click **Open Lumen Harbor Analytics** (suggested walkthrough or the synthetic demo notice). You land on `/opportunities/opp_demo_lumen`.
+**Do:** Click **PreStocks catalog** (header) or the **PreStocks** nav item.
 
-**Say:** “Lumen Harbor Analytics is a synthetic demo packet, not a real company. The opportunity claims 400 common shares at 18 dollars. Structured evidence already includes an SPV-interest memo, issuer-approval transfer terms, a matching asking-price worksheet, and a transaction worksheet that omits stated payment.”
+**Say:** “This is the official PreStocks list, fetched read-only. Tokens track pre-IPO prices via SPV exposure. That is not the same as owning issuer shares.”
 
-**Do:** Scroll the evidence list enough to show those records. Point at **Review readiness** if it is on screen (R04 should still need stated payment). Do **not** enter 7225.00 yet.
+**Do:** Point at the freshness banner (**Live** or **Cached**). Open **OpenAI PreStocks** via **View market information**.
 
-**Do:** Click **Open review workspace**.
+**Highlight:** `tokenPrice`, `markPrice`, **Retrieved at**, **Freshness**, and “Not provided by this API” for a market-data timestamp.
 
-## 3. First review run (~40 seconds) — Review workspace
+**Say:** “VERIQ records when it received the array. PreStocks does not send an exchange timestamp or a currency code.”
 
-**Do:** Click **Run checks**.
+**Do:** Click **Back to catalog**, then **Back to opportunities**.
 
-**Highlight:**
+## 3. Lumen packet and first run (~40 seconds)
 
-- **Review summary** counts: Attention 2, Insufficient evidence 2, Consistent 1
-- **R01** Attention — claimed common stock vs structured SPV interest
-- **R02** Attention — issuer approval required
-- **R03** Consistent — asking-price 18.00 matches the quote
-- **R04** Insufficient evidence — stated payment missing
-- **R05** Insufficient evidence — completeness roll-up of that gap
+**Do:** Open **Lumen Harbor Analytics** from Overview or the opportunities list.
 
-**Say:** “One packet, mixed outcomes. That mix is the point. It is not a verified, safe, or approved result.”
+**Say:** “Synthetic packet, not a real company. Claimed 400 common shares at 18 dollars. Structured evidence already has an SPV-interest memo, issuer-approval terms, a matching asking-price worksheet, and a transaction worksheet with no stated payment.”
 
-**Do:** On the R04 card, click **Open evidence record** or **Structured details** (or the walkthrough button **Open transaction worksheet**). That jumps to the opportunity page, hash `#evidence-evd_demo_lumen_tx`.
+**Do:** Point at **Review readiness** (R04 still needs stated payment). Click **Open review workspace**. Click **Run checks**.
 
-## 4. Enter 7225.00 (~25 seconds) — Transaction worksheet
+**Highlight:** Attention 2, Insufficient evidence 2, Consistent 1 — **R01** Attention, **R02** Attention, **R03** Consistent, **R04** Insufficient evidence, **R05** Insufficient evidence.
 
-**Where:** Opportunity detail, evidence record **Transaction worksheet (synthetic demo)**, field **Stated payment amount**.
+**Say:** “Mixed outcomes in one packet. That mix is not a verified or safe result.”
 
-**Do:** Type `7225.00`. Click **Save structured details**. Confirm the line “Saved locally. This is not a verification result.”
+## 4. Enter 7225.00, second run, history (~40 seconds)
 
-**Say:** “Four hundred times 18, plus 25 in fees, is 7225. The presenter types that amount. The app does not invent it.”
+**Do:** On the R04 card click **Open evidence record** or **Structured details** (or **Open transaction worksheet**).
 
-**Do:** Click **Open review workspace** again (header, or the walkthrough hint).
+**Where:** **Transaction worksheet (synthetic demo)** → **Stated payment amount**.
 
-## 5. Second run and history (~30 seconds)
+**Do:** Type `7225.00`. Click **Save structured details**.
 
-**Do:** Click **Run checks**.
+**Say:** “Four hundred times 18, plus 25 in fees, is 7225. The presenter types it.”
 
-**Say:** “R04 and R05 should now be Consistent. R01 stays Attention — matching payment math does not resolve the security-type conflict.”
+**Do:** Click **Open review workspace**. Click **Run checks**.
 
-**Do:** Scroll to **Review history**. Click the earlier run (the one that is not **Latest**). Confirm the banner: you are viewing a historical snapshot. R04 on that snapshot should still show Insufficient evidence.
+**Say:** “R04 and R05 should be Consistent. R01 stays Attention — payment math does not fix the security-type conflict.”
 
-**Say:** “Edits and new runs do not rewrite what was already recorded.”
+**Do:** In **Review history**, open the earlier row (not **Latest**). Confirm the historical snapshot banner. R04 on that snapshot should still be Insufficient evidence.
 
-## 6. PreStocks market reference (~25 seconds)
+**Say:** “New runs do not rewrite what was already recorded.”
 
-**Do:** From the review header click **PreStocks reference**, or use the **PreStocks** nav item.
+## 5. Attach PreStocks context (~25 seconds)
 
-**Say:** “This is the live PreStocks catalog. Tokens track pre-IPO prices via SPV exposure. That is not the same as owning the company’s shares, and it is not a VERIQ finding.”
+**Do:** Click **PreStocks reference** in the review header (opens `/prestocks?opportunity=opp_demo_lumen`). On **OpenAI PreStocks**, click **Use as reference for Lumen Harbor Analytics**, then **Back to Lumen Harbor Analytics** (or **Return to review workspace**).
 
-**Do:** Open **OpenAI PreStocks** (or any listed row). Point at **tokenPrice**, **markPrice**, **Retrieved at**, and **Freshness**. If showing Lumen, note there is no matching PreStocks row for that synthetic issuer.
+**Do:** Scroll to **PreStocks market reference** and the **Labeled comparison** table.
 
-**Do:** Click **Back to catalog** or **Back to opportunity** / **Return to review workspace**.
+**Say:** “Lumen has no matching PreStocks row. Attaching OpenAI is optional context. It is not evidence and it does not change R01–R05. Token exposure is not share ownership.”
 
-**Say:** “Selecting a row is optional context. It does not change R01–R05.”
+## 6. Close (~15 seconds)
 
-## 7. Close (~15 seconds)
-
-**Say:** “VERIQ makes claim-versus-entered-evidence comparisons explicit and repeatable, and it can place a live PreStocks catalog next to those claims. It does not read documents, call an issuer, trade tokens, score the deal, or prove that anyone owns anything.”
+**Say:** “VERIQ makes claim-versus-entered-evidence checks repeatable, and it can sit a live PreStocks catalog next to those claims without turning a token price into a verdict.”
 
 **Stop.**

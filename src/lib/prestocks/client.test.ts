@@ -91,6 +91,50 @@ describe("PreStocks catalog client", () => {
     expect(result.warning).toMatch(/empty catalog/i);
   });
 
+  it("bypasses the cache window when forceRefresh is set", async () => {
+    await fetchPreStocksCatalog({
+      fetcher: async () => jsonResponse([samplePreStocksAsset]),
+      now: () => Date.parse("2026-09-17T12:00:00.000Z"),
+      cacheTtlMs: 30_000,
+    });
+    let calls = 0;
+    const result = await fetchPreStocksCatalog({
+      forceRefresh: true,
+      cacheTtlMs: 30_000,
+      now: () => Date.parse("2026-09-17T12:00:10.000Z"),
+      fetcher: async () => {
+        calls += 1;
+        return jsonResponse([
+          { ...samplePreStocksAsset, tokenPrice: 1100.5 },
+        ]);
+      },
+    });
+    expect(calls).toBe(1);
+    expect(result.freshness).toBe("live");
+    expect(result.assets[0]?.tokenPrice).toBe(1100.5);
+    expect(result.retrievedAt).toBe("2026-09-17T12:00:10.000Z");
+  });
+
+  it("keeps a failed force refresh labeled stale, not live", async () => {
+    await fetchPreStocksCatalog({
+      fetcher: async () => jsonResponse([samplePreStocksAsset]),
+      now: () => Date.parse("2026-09-17T12:00:00.000Z"),
+      cacheTtlMs: 30_000,
+    });
+    const result = await fetchPreStocksCatalog({
+      forceRefresh: true,
+      cacheTtlMs: 30_000,
+      now: () => Date.parse("2026-09-17T12:00:10.000Z"),
+      fetcher: async () => {
+        throw new Error("network down");
+      },
+    });
+    expect(result.ok).toBe(true);
+    expect(result.freshness).toBe("stale");
+    expect(result.assets[0]?.tokenPrice).toBe(samplePreStocksAsset.tokenPrice);
+    expect(result.warning).toMatch(/out of date|did not complete/i);
+  });
+
   it("selects a catalog row by symbol without calling another endpoint", () => {
     expect(
       findAssetBySymbol([samplePreStocksAsset], "openai")?.name,

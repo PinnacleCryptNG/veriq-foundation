@@ -441,7 +441,7 @@ export function StructuredDetailsEditor({
                       setStatedTotal(event.target.value);
                       setSaved(false);
                     }}
-                    placeholder="7225.00"
+                    placeholder="If stated"
                     aria-invalid={Boolean(fieldErrors.statedTotal)}
                   />
                 </Field>

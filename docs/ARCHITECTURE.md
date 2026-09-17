@@ -122,6 +122,7 @@ Server module: `src/lib/prestocks/client.ts`. Route handlers:
 
 - `GET /api/market/prestocks` — validated catalog
 - `GET /api/market/prestocks/[symbol]` — one row from that same catalog
+- `?refresh=1` on either route bypasses the 30-second in-memory cache and attempts a new upstream GET. Failure still returns a **stale** last-good snapshot when one exists, never relabeled as live.
 
 Optional server env `PRESTOCKS_API_URL` overrides the upstream catalog URL for tests. It is not a secret key. Client UI calls only `/api/market/prestocks`.
 

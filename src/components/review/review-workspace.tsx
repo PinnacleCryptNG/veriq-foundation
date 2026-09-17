@@ -225,8 +225,6 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
         </dl>
       </section>
 
-      <PreStocksReferencePanel opportunity={opportunity} />
-
       <ReviewReadiness opportunity={opportunity} context="review" />
       <FindingStateLegend />
 
@@ -354,6 +352,8 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
           </ul>
         )}
       </section>
+
+      <PreStocksReferencePanel opportunity={opportunity} />
     </PageContainer>
   );
 }

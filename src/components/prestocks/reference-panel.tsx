@@ -56,9 +56,13 @@ export function PreStocksReferencePanel({
       <SectionHeading
         id="prestocks-reference-heading"
         title="PreStocks market reference"
-        description="Optional context from the live PreStocks catalog. It is not evidence, not a rule input, and not a finding state."
+        description="Optional catalog context. It is not submitted evidence, not a rule input, and not stored in review history. Freshness (live, cached, stale, or unavailable) is labeled on the snapshot below."
         actions={
-          <LinkButton href="/prestocks" variant="outline" size="sm">
+          <LinkButton
+            href={`/prestocks?opportunity=${opportunity.id}`}
+            variant="outline"
+            size="sm"
+          >
             Open PreStocks catalog
           </LinkButton>
         }

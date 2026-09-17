@@ -44,7 +44,7 @@ npm run build
 | `/opportunities/new` | Intake form |
 | `/opportunities/[id]` | Opportunity detail, evidence, structured values |
 | `/opportunities/[id]/review` | Deterministic review workspace |
-| `/prestocks` | Read-only PreStocks catalog (live API, validated server-side) |
+| `/prestocks` | Read-only PreStocks catalog (official list, validated server-side; freshness labeled) |
 | `/prestocks/[symbol]` | One PreStocks catalog row as market reference |
 
 ## Review checks (ruleset `2026.09.1`)
@@ -73,7 +73,7 @@ No API key is required. VERIQ fetches that URL on the server, validates the JSON
 | `/prestocks/[symbol]` | One catalog row, provenance, retrieval time |
 | `/api/market/prestocks` | Server proxy + validation for the official list |
 
-Optional env: `PRESTOCKS_API_URL` (server-only override of the catalog URL). See `.env.example`. There is no PreStocks API key in this project.
+Optional env: `PRESTOCKS_API_URL` (server-only override of the catalog URL). See `.env.example`. There is no PreStocks API key in this project. **Refresh catalog** on the UI requests a new fetch (`?refresh=1`) instead of reusing the 30-second cache. Cached and stale snapshots are labeled; they are never shown as live.
 
 PreStocks figures are token-market fields. They are not submitted evidence, not per-share issuer quotes, and not proof of ownership.
 
