@@ -94,6 +94,7 @@ export function PreStocksReferencePanel({
                   Select a PreStocks asset
                 </span>
                 <NativeSelect
+                  id="prestocks-reference-select"
                   className="mt-1"
                   value={draftSymbol || selected?.symbol || ""}
                   onChange={(event) => setDraftSymbol(event.target.value)}
