@@ -1,6 +1,7 @@
 export const navigation = [
   { href: "/", label: "Overview" },
   { href: "/opportunities", label: "Opportunities" },
+  { href: "/prestocks", label: "PreStocks" },
 ] as const;
 
 export function isNavActive(href: string, pathname: string): boolean {

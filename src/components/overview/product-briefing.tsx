@@ -15,7 +15,7 @@ const briefing = [
   },
   {
     title: "What you can do",
-    body: "Capture an opportunity, attach evidence records, enter structured values, follow input-completeness guidance, run checks, open cited evidence from findings, then re-run after an edit. Earlier snapshots stay in Review history.",
+    body: "Capture an opportunity, attach evidence records, enter structured values, follow input-completeness guidance, run checks, and optionally attach a PreStocks catalog row as market context. Re-run after an edit; earlier snapshots stay in Review history.",
   },
   {
     title: "What this demo shows",
@@ -23,7 +23,7 @@ const briefing = [
   },
   {
     title: "Outside this implementation",
-    body: "No AI extraction, issuer lookup, external APIs, authentication, backend, marketplace, scores, or “Verified” badge. Findings do not prove ownership, authenticity, legitimacy, safety, or investment quality. Browser localStorage is demo-only.",
+    body: "No AI extraction, issuer lookup, authentication, trading, wallet, marketplace, scores, or “Verified” badge. PreStocks is a read-only catalog reference. Findings do not prove ownership, authenticity, legitimacy, safety, or investment quality. Browser localStorage is demo-only.",
   },
 ] as const;
 

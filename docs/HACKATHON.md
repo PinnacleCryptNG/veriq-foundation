@@ -1,12 +1,12 @@
 # Hackathon submission draft
 
-This draft describes the product that exists in this repository. It does not invent judging criteria, sponsor integrations, or track eligibility.
+This draft describes the product that exists in this repository. Official STOCKLANA materials supplied for this milestone: the “Best Use of PreStocks” track brief, plus `https://prestocks.com/api/prestocks` and `https://prestocks.com/products`.
 
-Official hackathon materials were not supplied in this repo. **Do not assert STOCKLANA (or any other) track eligibility from this document.** Confirm track fit, submission format, and required artifacts against the official brief before submitting.
+Do not treat this draft as a judging score or a guarantee of track eligibility. Confirm remaining submission artifacts (video length, team size, license) against the rest of the official packet.
 
 ## Project name and one-line description
 
-**VERIQ** — a local, evidence-based review workspace that compares claimed private and pre-IPO equity opportunity terms with reviewer-entered structured evidence using deterministic ruleset 2026.09.1.
+**VERIQ** — a local, evidence-based review workspace that compares claimed private and pre-IPO equity terms with reviewer-entered structured evidence (ruleset 2026.09.1) and can attach a live PreStocks catalog row as labeled market context.
 
 ## Problem statement
 
@@ -15,6 +15,8 @@ Private and pre-IPO opportunity packets mix claimed share classes, transfer lang
 ## Solution
 
 VERIQ lets a reviewer capture the claimed packet, attach evidence records, type structured values from those materials, and run a fixed ruleset. Findings cite the fields and evidence ids they used. Re-running checks appends a new snapshot; earlier runs stay in history. The engine does not read files, call issuers, or produce a score.
+
+Separately, VERIQ loads the official PreStocks catalog (read-only) so a reviewer can see token-market fields next to a claimed opportunity. That catalog is not evidence and does not change finding states.
 
 ## Intended users
 
@@ -28,12 +30,14 @@ Analysts and reviewers who evaluate private-market or pre-IPO opportunity packet
 4. Open **Review workspace** and click **Run checks**.
 5. Read finding states (Attention, Insufficient evidence, Not assessed, Consistent). Follow **Open evidence record** / **Structured details** links.
 6. Edit a structured value, click **Run checks** again, then open the earlier snapshot in **Review history**.
+7. Optionally open **PreStocks**, pick a catalog row, and attach it as market context on the opportunity. Return via **Back to opportunity** / **Return to review workspace**.
 
 ## Technical implementation
 
 - **App:** Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui, Zod validation, Vitest.
 - **Engine:** Pure `evaluateOpportunity` in `src/engine/`. No DOM, network, AI, or storage access. Ruleset `2026.09.1` (R01–R05). Integer minor-unit money with a 1-cent match tolerance.
-- **Persistence:** Browser `localStorage` keys `veriq.opportunities.v1` and `veriq.verification-runs.v1`. Opportunity records and review runs are stored separately. At most 20 runs per opportunity. Demo-only; not production storage.
+- **Persistence:** Browser `localStorage` keys `veriq.opportunities.v1`, `veriq.verification-runs.v1`, and `veriq.prestocks-references.v1`. Opportunity records and review runs stay separate from PreStocks selections.
+- **PreStocks:** Server fetch of `GET https://prestocks.com/api/prestocks`, Zod validation, freshness labels (live / cached / stale / unavailable). Client UI calls `/api/market/prestocks` only. No API key. No trading.
 - **Demo data:** Seeded opportunities, including synthetic **Lumen Harbor Analytics** (`opp_demo_lumen`). Seeds are merged only when missing; user-created records are not overwritten.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for routes, schemas, and trust boundaries.
@@ -46,14 +50,18 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for routes, schemas, and trust boundaries
 - Deterministic review runs with evidence traceability
 - Historical run snapshots that do not change when evidence is edited
 - Lumen Harbor Analytics walkthrough: mixed first-run findings; presenter enters stated payment **7225.00**; second run; preserved history
-- Explicit limitation copy: findings are not ownership, authenticity, legitimacy, safety, or investment-quality proof
+- Read-only PreStocks catalog browse/search, asset provenance, and optional per-opportunity market reference
+- Explicit limitation copy: findings are not ownership, authenticity, legitimacy, safety, or investment-quality proof; PreStocks tokens are not treated as direct share ownership
 
 ## Current limitations
 
 - Client-only demo. Clearing site data removes local records.
 - Files are not read. Structured values must be typed by the reviewer.
-- No authentication, multi-user sharing, backend, or issuer confirmation.
+- No authentication, multi-user sharing, or production storage.
 - No scores, pass/fail verdict, or “Verified” badge.
+- PreStocks catalog has no currency code and no market-data timestamp in the API payload. VERIQ shows retrieval time instead.
+- No trading, wallet, mint, or redemption flows.
+- Only the documented list endpoint is used. Per-asset views filter that list.
 - Ruleset is the implemented five checks only. Completeness of those fields is not a complete diligence packet.
 - localStorage is not secure, durable, or multi-device storage.
 
@@ -64,23 +72,23 @@ Labeled **future work** — not present in this demo:
 - Server-backed persistence and multi-reviewer workspaces
 - Assisted extraction of structured fields from documents, with human confirmation still required
 - Optional issuer or transfer-agent lookups that remain clearly separate from local findings
+- Additional documented PreStocks endpoints if PreStocks publishes them
 - Additional rules, still deterministic and still without a composite “trust score”
 - Export of a review-run snapshot for an audit folder
 
 None of the above should be described as shipped.
 
-## Track fit — confirmation required
+## Track fit — supplied PreStocks brief
 
-This repository does not contain official STOCKLANA (or other hackathon) rules, track lists, or judging criteria.
+Supplied brief: *Build your project using PreStocks (tokenized pre-IPO stocks). Creativity, integration depth, and product quality will be considered.*
 
-Before claiming a track:
+What this repo actually does with that brief:
 
-- Confirm the official track definitions and eligibility for the submission cycle.
-- Confirm whether a local, no-backend review tool matches the required theme (for example private-market tooling vs on-chain verification vs AI products).
-- Confirm required artifacts (demo video length, repo URL, license, team size).
-- Do not treat this draft as evidence of eligibility.
+- Uses the official PreStocks catalog as a first-class, read-only surface inside the analyst workspace
+- Lets a reviewer attach a catalog row while reviewing a private/pre-IPO packet, with source, retrieval time, and trust copy
+- Keeps PreStocks data out of the deterministic ruleset so token prices cannot silently become a Consistent finding
 
-If the brief requires issuer connectivity, blockchain settlement, or automated document verification, VERIQ as implemented does **not** satisfy those requirements.
+What still must be confirmed from other official materials: submission format, demo-video rules, team eligibility, and any additional track constraints not in the supplied paragraph. This draft does not claim a win, a score, or that tokenized SPV exposure is the same as owning issuer shares.
 
 ---
 
@@ -148,8 +156,20 @@ Match this script to the current UI. Button labels in **bold** exist in the app.
 
 **Say:** “Edits and new runs do not rewrite what was already recorded.”
 
-## 6. Close (~20 seconds)
+## 6. PreStocks market reference (~25 seconds)
 
-**Say:** “VERIQ makes claim-versus-entered-evidence comparisons explicit and repeatable. It does not read documents, call an issuer, score the deal, or prove that anyone owns anything. What you saw is a local demo of structured review — not independent verification.”
+**Do:** From the review header click **PreStocks reference**, or use the **PreStocks** nav item.
 
-**Stop.** Do not show New opportunity unless there is leftover time; it is intake only and does not change the Lumen story.
+**Say:** “This is the live PreStocks catalog. Tokens track pre-IPO prices via SPV exposure. That is not the same as owning the company’s shares, and it is not a VERIQ finding.”
+
+**Do:** Open **OpenAI PreStocks** (or any listed row). Point at **tokenPrice**, **markPrice**, **Retrieved at**, and **Freshness**. If showing Lumen, note there is no matching PreStocks row for that synthetic issuer.
+
+**Do:** Click **Back to catalog** or **Back to opportunity** / **Return to review workspace**.
+
+**Say:** “Selecting a row is optional context. It does not change R01–R05.”
+
+## 7. Close (~15 seconds)
+
+**Say:** “VERIQ makes claim-versus-entered-evidence comparisons explicit and repeatable, and it can place a live PreStocks catalog next to those claims. It does not read documents, call an issuer, trade tokens, score the deal, or prove that anyone owns anything.”
+
+**Stop.**

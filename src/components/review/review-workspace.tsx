@@ -13,6 +13,7 @@ import { DemoReviewNotice } from "@/components/review/demo-review-notice";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
 import { FindingCard } from "@/components/review/finding-card";
+import { PreStocksReferencePanel } from "@/components/prestocks/reference-panel";
 import { FindingStateLegend } from "@/components/review/finding-state-legend";
 import { ReviewReadiness } from "@/components/review/review-readiness";
 import { ReviewReport } from "@/components/review/review-report";
@@ -170,6 +171,12 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
             <LinkButton href={`/opportunities/${opportunity.id}`} variant="outline">
               Opportunity detail
             </LinkButton>
+            <LinkButton
+              href={`/prestocks?opportunity=${opportunity.id}`}
+              variant="outline"
+            >
+              PreStocks reference
+            </LinkButton>
           </div>
         }
       />
@@ -217,6 +224,8 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
           <SummaryField label="Quoted price" value={formatClaimedPrice(opportunity)} />
         </dl>
       </section>
+
+      <PreStocksReferencePanel opportunity={opportunity} />
 
       <ReviewReadiness opportunity={opportunity} context="review" />
       <FindingStateLegend />

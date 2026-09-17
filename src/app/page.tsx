@@ -10,6 +10,7 @@ import { ProductBriefing } from "@/components/overview/product-briefing";
 import { ReviewSurfaceGrid } from "@/components/overview/review-surface-grid";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
+import { PreStocksNotice } from "@/components/prestocks/prestocks-notice";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -27,6 +28,9 @@ export default function OverviewPage() {
             <LinkButton href="/opportunities" variant="outline">
               Open opportunities
             </LinkButton>
+            <LinkButton href="/prestocks" variant="outline">
+              PreStocks catalog
+            </LinkButton>
             <LinkButton href="/opportunities/new">
               New opportunity
               <ArrowRight data-icon="inline-end" />
@@ -38,6 +42,7 @@ export default function OverviewPage() {
       <ProductBriefing />
       <LimitationNotice />
       <PersistenceNotice />
+      <PreStocksNotice />
       <DemoWalkthroughHint surface="overview" />
       <DemoScenarioNotice />
 

@@ -11,6 +11,7 @@ import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
 import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
+import { PreStocksReferencePanel } from "@/components/prestocks/reference-panel";
 import { ReviewReadiness } from "@/components/review/review-readiness";
 import { VerificationNotice } from "@/components/verification-notice";
 import { DEMO_SCENARIO_ID, isDemoScenario } from "@/data/demo-opportunities";
@@ -97,6 +98,12 @@ export function OpportunityDetailPage({
             <LinkButton href={`/opportunities/${opportunity.id}/review`}>
               Open review workspace
             </LinkButton>
+            <LinkButton
+              href={`/prestocks?opportunity=${opportunity.id}`}
+              variant="outline"
+            >
+              PreStocks reference
+            </LinkButton>
             <LinkButton href="/opportunities" variant="outline">
               Back to opportunities
             </LinkButton>
@@ -175,6 +182,8 @@ export function OpportunityDetailPage({
       <p className="text-sm leading-6 break-words text-muted-foreground">
         {opportunity.limitationNote}
       </p>
+
+      <PreStocksReferencePanel opportunity={opportunity} />
 
       <ReviewReadiness opportunity={opportunity} />
 

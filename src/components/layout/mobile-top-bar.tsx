@@ -32,7 +32,7 @@ export function MobileTopBar() {
           <SheetHeader className="border-b border-sidebar-border">
             <SheetTitle className="sr-only">Workspace navigation</SheetTitle>
             <SheetDescription className="sr-only">
-              Overview and opportunities
+              Overview, opportunities, and PreStocks
             </SheetDescription>
             <Wordmark />
           </SheetHeader>

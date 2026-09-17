@@ -44,6 +44,8 @@ npm run build
 | `/opportunities/new` | Intake form |
 | `/opportunities/[id]` | Opportunity detail, evidence, structured values |
 | `/opportunities/[id]/review` | Deterministic review workspace |
+| `/prestocks` | Read-only PreStocks catalog (live API, validated server-side) |
+| `/prestocks/[symbol]` | One PreStocks catalog row as market reference |
 
 ## Review checks (ruleset `2026.09.1`)
 
@@ -56,6 +58,24 @@ npm run build
 | R05 | Evidence completeness |
 
 Findings use only **explicitly entered structured values**. Filenames, MIME types, descriptions, and file bytes are not read as document contents.
+
+## PreStocks market reference
+
+Read-only integration with the official public catalog:
+
+`GET https://prestocks.com/api/prestocks`
+
+No API key is required. VERIQ fetches that URL on the server, validates the JSON, and exposes it at `/prestocks` and on opportunity/review pages as **market context**. It does not feed ruleset 2026.09.1.
+
+| Path | Purpose |
+| --- | --- |
+| `/prestocks` | Browse and search the retrieved catalog |
+| `/prestocks/[symbol]` | One catalog row, provenance, retrieval time |
+| `/api/market/prestocks` | Server proxy + validation for the official list |
+
+Optional env: `PRESTOCKS_API_URL` (server-only override of the catalog URL). See `.env.example`. There is no PreStocks API key in this project.
+
+PreStocks figures are token-market fields. They are not submitted evidence, not per-share issuer quotes, and not proof of ownership.
 
 ## Finding states
 
@@ -90,6 +110,7 @@ Presenter steps are in [docs/HACKATHON.md](docs/HACKATHON.md). Do not pre-fill `
 
 - Opportunities: `veriq.opportunities.v1`
 - Review runs: `veriq.verification-runs.v1` (separate from opportunity records)
+- PreStocks reference selections: `veriq.prestocks-references.v1` (does not rewrite opportunity records)
 
 Browser `localStorage` is demo-only. It is not secure production storage. Seeded demo records are merged in when missing; user-created opportunities are not overwritten.
 
@@ -99,4 +120,6 @@ Browser `localStorage` is demo-only. It is not secure production storage. Seeded
 - External issuer or cap-table lookups
 - On-chain ownership checks
 - Legal conclusions or fraud detection
-- Authentication, backend, marketplace, scores, or a “Verified” badge
+- Authentication, marketplace, scores, or a “Verified” badge
+- Trading, wallets, order placement, or custody
+- Treating PreStocks token prices as direct share ownership or as a review verdict
