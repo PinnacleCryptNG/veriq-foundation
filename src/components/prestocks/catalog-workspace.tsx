@@ -116,7 +116,21 @@ export function PreStocksCatalogWorkspace() {
                 </ul>
               )}
             </>
-          ) : null}
+          ) : (
+            <EmptyState
+              title="PreStocks catalog unavailable"
+              description="No market figures are shown. Opportunity records and review history were not changed. Missing prices are not invented."
+              actions={
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => void reload()}
+                >
+                  Refresh catalog
+                </Button>
+              }
+            />
+          )}
         </>
       )}
     </PageContainer>

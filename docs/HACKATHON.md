@@ -30,7 +30,7 @@ Analysts and reviewers who evaluate private-market or pre-IPO opportunity packet
 4. Open **Review workspace** and click **Run checks**.
 5. Read finding states (Attention, Insufficient evidence, Not assessed, Consistent). Follow **Open evidence record** / **Structured details** links.
 6. Edit a structured value, click **Run checks** again, then open the earlier snapshot in **Review history**.
-7. Optionally open **PreStocks**, pick a catalog row, and attach it as market context on the opportunity. Return via **Back to opportunity** / **Return to review workspace**.
+7. Optionally open **PreStocks**, pick a catalog row, and attach it as market context on the opportunity. Return via **Back to {company name}** (for Lumen: **Back to Lumen Harbor Analytics**) or **Return to review workspace**.
 
 ## Technical implementation
 

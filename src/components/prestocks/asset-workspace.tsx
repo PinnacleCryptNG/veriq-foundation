@@ -32,7 +32,7 @@ export function PreStocksAssetWorkspace({ symbol }: { symbol: string }) {
         actions={
           <div className="flex flex-wrap gap-2">
             <Button type="button" variant="outline" onClick={() => void reload()}>
-              Refresh
+              Refresh catalog
             </Button>
             <LinkButton
               href={
@@ -46,7 +46,7 @@ export function PreStocksAssetWorkspace({ symbol }: { symbol: string }) {
             </LinkButton>
             {opportunity ? (
               <LinkButton href={`/opportunities/${opportunity.id}`}>
-                Back to opportunity
+                Back to {opportunity.companyName}
               </LinkButton>
             ) : (
               <LinkButton href="/opportunities">Back to opportunities</LinkButton>
@@ -71,7 +71,14 @@ export function PreStocksAssetWorkspace({ symbol }: { symbol: string }) {
               title="Asset not in this catalog snapshot"
               description="VERIQ only reads the official PreStocks catalog through the server market-reference route and selects a row by symbol. No other PreStocks endpoint is called. Missing rows are not filled with guessed prices."
               actions={
-                <LinkButton href="/prestocks" variant="outline">
+                <LinkButton
+                  href={
+                    opportunity
+                      ? `/prestocks?opportunity=${opportunity.id}`
+                      : "/prestocks"
+                  }
+                  variant="outline"
+                >
                   Open catalog
                 </LinkButton>
               }

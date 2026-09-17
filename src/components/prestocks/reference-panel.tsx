@@ -91,6 +91,13 @@ export function PreStocksReferencePanel({
             />
           ) : null}
 
+          {!catalog.result.ok && catalog.result.assets.length === 0 ? (
+            <EmptyState
+              title="PreStocks catalog unavailable"
+              description="No market figures are shown. Opportunity records and review history were not changed."
+            />
+          ) : null}
+
           {catalog.result.assets.length > 0 ? (
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
               <label className="min-w-0 flex-1 text-sm">
