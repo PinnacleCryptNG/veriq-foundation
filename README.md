@@ -1,8 +1,15 @@
 # VERIQ
 
-Private-market opportunity review workspace. Reviewers capture deal claims, attach evidence metadata, enter structured evidence values, and run deterministic checks.
+Evidence-based review workspace for **private and pre-IPO equity opportunity packets**. Reviewers capture claimed deal terms, attach evidence metadata, enter structured evidence values, and run deterministic checks under ruleset **2026.09.1**.
 
-This is a **demo review tool**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety.
+This is a **local demo review tool**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety.
+
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Routes, data model, persistence, review engine, trust boundaries |
+| [docs/HACKATHON.md](docs/HACKATHON.md) | Submission-ready project description and a 2–3 minute live demo script |
 
 ## Stack
 
@@ -10,7 +17,7 @@ This is a **demo review tool**. It is not independent legal, financial, issuer, 
 - Tailwind CSS and shadcn/ui
 - Lucide icons
 - Zod for intake, structured evidence, and review-run validation
-- Vitest for the verification engine
+- Vitest for the review engine and storage helpers
 
 ## Run locally
 
@@ -32,7 +39,7 @@ npm run build
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Workspace overview |
+| `/` | Overview: product briefing, implemented checks, opportunity queue |
 | `/opportunities` | Demo and locally created opportunities |
 | `/opportunities/new` | Intake form |
 | `/opportunities/[id]` | Opportunity detail, evidence, structured values |
@@ -75,23 +82,16 @@ Expected findings when you click **Run checks** without editing:
 | R04 | Insufficient evidence | Quantity, price, and fees are entered; stated payment is omitted |
 | R05 | Insufficient evidence | Completeness roll-up of the missing stated payment |
 
-400 × 18.00 + 25.00 = 7225.00. Entering `7225.00` as the stated payment and re-running should make R04 and R05 Consistent. The previous run stays in history.
+400 × 18.00 + 25.00 = 7225.00. Entering `7225.00` as **Stated payment amount** on the transaction worksheet, saving, and clicking **Run checks** again should make R04 and R05 Consistent. The previous run stays in **Review history**.
+
+Presenter steps are in [docs/HACKATHON.md](docs/HACKATHON.md). Do not pre-fill `7225.00`; enter it during the demo.
 
 ## Local persistence
 
 - Opportunities: `veriq.opportunities.v1`
 - Review runs: `veriq.verification-runs.v1` (separate from opportunity records)
 
-Browser `localStorage` is demo-only. It is not secure production storage.
-
-## Manual review workflow
-
-1. Open **Lumen Harbor Analytics** from Overview or Opportunities.
-2. Read the review-readiness guide and the structured field groups on each evidence record.
-3. Enter values from the submitted evidence only. Do not guess from filenames.
-4. Open **Review workspace** and click **Run checks**.
-5. Follow evidence links from findings to the corresponding record.
-6. Edit a structured value, run checks again, and confirm the previous run is unchanged.
+Browser `localStorage` is demo-only. It is not secure production storage. Seeded demo records are merged in when missing; user-created opportunities are not overwritten.
 
 ## What is not included
 
@@ -99,4 +99,4 @@ Browser `localStorage` is demo-only. It is not secure production storage.
 - External issuer or cap-table lookups
 - On-chain ownership checks
 - Legal conclusions or fraud detection
-- Authentication, backend, or payments
+- Authentication, backend, marketplace, scores, or a “Verified” badge

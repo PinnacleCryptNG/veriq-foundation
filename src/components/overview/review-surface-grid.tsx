@@ -7,9 +7,9 @@ export function ReviewSurfaceGrid() {
       <div className="space-y-1">
         <h2
           id="review-surfaces-heading"
-            className="text-sm font-medium text-foreground"
+          className="text-sm font-medium text-foreground"
         >
-          What review will examine
+          Implemented checks · ruleset 2026.09.1
         </h2>
         <p className="text-sm text-muted-foreground">
           After you run checks, findings appear in the review workspace. They
