@@ -8,6 +8,7 @@ import { PersistenceNotice } from "@/components/persistence-notice";
 import { OverviewOpportunityQueue } from "@/components/overview/opportunity-queue";
 import { ReviewSurfaceGrid } from "@/components/overview/review-surface-grid";
 import { VerificationNotice } from "@/components/verification-notice";
+import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function OverviewPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
       <PageHeader
         title="Workspace"
-        description="Compare private-market deal claims against submitted evidence. Intake is local to this browser. Verification has not been run."
+        description="Compare private-market deal claims against submitted evidence. Intake and review runs stay in this browser."
         actions={
           <>
             <LinkButton href="/opportunities" variant="outline">
@@ -37,22 +38,24 @@ export default function OverviewPage() {
       <VerificationNotice />
       <PersistenceNotice />
       <DemoNotice />
+      <DemoScenarioNotice />
 
       <section className="grid gap-3 lg:grid-cols-3">
         <div className="rounded-lg border border-border bg-card p-4 lg:col-span-2">
           <h2 className="text-sm font-medium text-foreground">Purpose</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            {siteConfig.description} Capture an opportunity, attach evidence
-            metadata, and inspect the record. No automated findings are produced
-            in this milestone.
+            {siteConfig.description} Capture an opportunity, enter structured
+            evidence values, and run deterministic checks. Findings compare
+            entered claims with entered values. They are not independent
+            verification.
           </p>
         </div>
         <div className="rounded-lg border border-border bg-card p-4">
           <h2 className="text-sm font-medium text-foreground">Workspace status</h2>
           <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
             <li>Intake and local persistence are enabled.</li>
-            <li>Evidence records are stored in this browser only.</li>
-            <li>No opportunity has been verified.</li>
+            <li>Evidence records and review runs stay in this browser only.</li>
+            <li>Review findings are not a verified, safe, or approved result.</li>
           </ul>
         </div>
       </section>

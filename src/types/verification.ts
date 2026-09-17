@@ -115,10 +115,17 @@ export const verificationEvaluationSchema = z.object({
   summary: verificationSummarySchema,
 });
 
+export const evidenceCatalogEntrySchema = z.object({
+  id: z.string().min(1),
+  displayName: z.string().min(1),
+});
+
 export const verificationRunSchema = verificationEvaluationSchema.extend({
   id: z.string().min(1),
   opportunityId: z.string().min(1),
   timestamp: z.iso.datetime(),
+  inputSnapshot: engineInputSchema.optional(),
+  evidenceCatalog: z.array(evidenceCatalogEntrySchema).optional(),
 });
 
 export const storedVerificationStateSchema = z.object({
@@ -145,4 +152,5 @@ export type EngineInput = z.infer<typeof engineInputSchema>;
 export type Finding = z.infer<typeof findingSchema>;
 export type VerificationSummary = z.infer<typeof verificationSummarySchema>;
 export type VerificationEvaluation = z.infer<typeof verificationEvaluationSchema>;
+export type EvidenceCatalogEntry = z.infer<typeof evidenceCatalogEntrySchema>;
 export type VerificationRun = z.infer<typeof verificationRunSchema>;

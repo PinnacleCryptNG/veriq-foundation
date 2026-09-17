@@ -21,6 +21,7 @@ import {
 } from "@/types/opportunity";
 import type { StructuredEvidenceDetails } from "@/types/verification";
 import { StructuredDetailsEditor } from "@/components/opportunities/structured-details-editor";
+import { valueSourceLegend } from "@/config/evidence-guidance";
 
 type EvidenceSectionProps = {
   opportunityId: string;
@@ -109,6 +110,21 @@ export function EvidenceSection({
           authenticate it, prove ownership, or start verification. Attachments
           over {formatFileSize(MAX_PERSISTED_FILE_BYTES)} keep metadata only.
         </p>
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {valueSourceLegend.map((item) => (
+            <li
+              key={item.id}
+              className="rounded-md border border-border bg-card/60 px-3 py-2"
+            >
+              <p className="text-[11px] font-medium tracking-wide text-foreground uppercase">
+                {item.label}
+              </p>
+              <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
+                {item.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {evidence.length === 0 ? (
@@ -131,7 +147,7 @@ export function EvidenceSection({
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {evidenceTypeLabels[item.type]} · Added{" "}
-                    {formatDate(item.createdAt)}
+                    {formatDate(item.createdAt)} · {item.id}
                   </p>
                   {item.description ? (
                     <p className="text-sm text-muted-foreground">
@@ -140,12 +156,13 @@ export function EvidenceSection({
                   ) : null}
                   {item.file ? (
                     <p className="text-xs text-muted-foreground">
-                      {item.file.fileName} · {formatFileSize(item.file.fileSize)}
+                      File metadata: {item.file.fileName} ·{" "}
+                      {formatFileSize(item.file.fileSize)} · {item.file.mimeType}
                       {item.file.bytesPersisted ? " · preview stored locally" : " · metadata only"}
                     </p>
                   ) : (
                     <p className="text-xs text-muted-foreground">
-                      Metadata only. No file attached.
+                      File metadata: none. No file attached.
                     </p>
                   )}
                   {item.storageNote ? (
@@ -175,6 +192,7 @@ export function EvidenceSection({
               <div className="mt-3">
                 <StructuredDetailsEditor
                   evidenceId={item.id}
+                  evidenceType={item.type}
                   details={item.structuredDetails}
                   onSave={(details) =>
                     onUpdateDetails(opportunityId, item.id, details)

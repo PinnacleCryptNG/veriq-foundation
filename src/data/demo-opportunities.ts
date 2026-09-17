@@ -86,6 +86,95 @@ const demoOpportunitiesInput: Opportunity[] = [
     updatedAt: "2026-09-10T13:15:00.000Z",
     isDemo: true,
   },
+  {
+    id: "opp_demo_lumen",
+    companyName: "Lumen Harbor Analytics",
+    instrument: "common_stock",
+    shareClass: "Common",
+    sellerOrIntermediary: "Northglass Secondary Desk (synthetic)",
+    quantityOffered: "400",
+    quotedPrice: "18.00",
+    currency: "USD",
+    claimedSummary:
+      "Synthetic demo packet. The opportunity claims 400 common shares at USD 18.00. Structured evidence includes an SPV-interest description, issuer-approval transfer terms, a matching asking-price reference, and a transaction worksheet missing the stated payment amount. Not a real company or transaction.",
+    source: "Synthetic demo scenario",
+    status: "queued_for_review",
+    missingMaterials: [
+      "Independent issuer confirmation of the claimed share class",
+      "Stated payment amount on the transaction worksheet",
+    ],
+    limitationNote:
+      "All Lumen Harbor records and structured values are synthetic demo data. They are not real issuer documents, ownership proof, or independent confirmation.",
+    evidence: [
+      {
+        id: "evd_demo_lumen_spv",
+        type: "ownership_document",
+        displayName: "SPV interest memo (synthetic demo)",
+        description:
+          "Synthetic demo record. Structured value is SPV interest, which conflicts with the claimed common stock. File contents are not read.",
+        storageNote:
+          "Synthetic metadata only. This is not a real ownership document and is not proof of authenticity or title.",
+        structuredDetails: {
+          securityType: "spv_interest",
+        },
+        createdAt: "2026-09-16T14:00:00.000Z",
+      },
+      {
+        id: "evd_demo_lumen_transfer",
+        type: "transfer_terms",
+        displayName: "Transfer restriction note (synthetic demo)",
+        description:
+          "Synthetic demo record. Structured transfer terms state that issuer approval is required.",
+        storageNote:
+          "Synthetic metadata only. Entered terms are not an issuer confirmation.",
+        structuredDetails: {
+          transfer: { restriction: "issuer_approval_required" },
+        },
+        createdAt: "2026-09-16T14:05:00.000Z",
+      },
+      {
+        id: "evd_demo_lumen_valuation",
+        type: "valuation_reference",
+        displayName: "Asking-price worksheet (synthetic demo)",
+        description:
+          "Synthetic demo record. Asking-price reference of USD 18.00 per share, same currency and unit as the claimed quote.",
+        storageNote:
+          "Synthetic metadata only. This is not an appraisal or completed trade.",
+        structuredDetails: {
+          valuation: {
+            amount: "18.00",
+            currency: "USD",
+            unit: "per_share",
+            referenceType: "asking_price",
+            referenceDate: "2026-08-15",
+            basis: "Synthetic asking-price worksheet",
+          },
+        },
+        createdAt: "2026-09-16T14:10:00.000Z",
+      },
+      {
+        id: "evd_demo_lumen_tx",
+        type: "transaction_agreement",
+        displayName: "Transaction worksheet (synthetic demo)",
+        description:
+          "Synthetic demo record. Quantity 400 × USD 18.00 plus USD 25.00 fees. Stated payment amount is intentionally omitted so arithmetic cannot finish.",
+        storageNote:
+          "Synthetic metadata only. Entered figures do not mean payment occurred.",
+        structuredDetails: {
+          transaction: {
+            quantity: "400",
+            unitPrice: "18.00",
+            currency: "USD",
+            fees: "25.00",
+          },
+        },
+        createdAt: "2026-09-16T14:15:00.000Z",
+      },
+    ],
+    createdAt: "2026-09-16T13:40:00.000Z",
+    updatedAt: "2026-09-17T10:00:00.000Z",
+    isDemo: true,
+  },
 ];
 
 export const demoOpportunities: Opportunity[] =
@@ -98,3 +187,9 @@ export const demoOpportunityIds = new Set(
 );
 
 export const demoOpportunityCount = demoOpportunities.length;
+
+export const DEMO_SCENARIO_ID = "opp_demo_lumen";
+
+export function isDemoScenario(opportunityId: string): boolean {
+  return opportunityId === DEMO_SCENARIO_ID;
+}

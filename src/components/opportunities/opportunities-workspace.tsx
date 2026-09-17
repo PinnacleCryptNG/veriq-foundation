@@ -7,6 +7,7 @@ import { LinkButton } from "@/components/link-button";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
 import { VerificationNotice } from "@/components/verification-notice";
+import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import {
   OpportunityCards,
   OpportunityTable,
@@ -22,7 +23,7 @@ export function OpportunitiesWorkspace() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
       <PageHeader
         title="Opportunities"
-        description="Private-market records captured for review. Status tracks intake and evidence collection only — none of these items have been verified."
+        description="Private-market records captured for review. Status tracks intake and evidence collection only. It is not a verification verdict."
         actions={
           <LinkButton href="/opportunities/new">New opportunity</LinkButton>
         }
@@ -32,6 +33,7 @@ export function OpportunitiesWorkspace() {
       <VerificationNotice />
       <PersistenceNotice />
       <DemoNotice />
+      <DemoScenarioNotice />
       {warning ? <Banner>{warning}</Banner> : null}
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
 

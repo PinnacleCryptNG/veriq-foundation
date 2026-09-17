@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { DemoBadge } from "@/components/opportunities/demo-badge";
 import { StatusBadge } from "@/components/opportunities/status-badge";
+import { isDemoScenario } from "@/data/demo-opportunities";
 import { formatDate, instrumentLabels } from "@/lib/format";
 import type { Opportunity } from "@/types/opportunity";
 
@@ -41,7 +42,15 @@ export function OpportunityTable({
                   >
                     {opportunity.companyName}
                   </Link>
-                  {opportunity.isDemo ? <DemoBadge /> : null}
+                  {opportunity.isDemo ? (
+                    <DemoBadge
+                      label={
+                        isDemoScenario(opportunity.id)
+                          ? "Synthetic demo scenario"
+                          : "Demo"
+                      }
+                    />
+                  ) : null}
                 </span>
                 <span className="max-w-xs text-xs leading-4 whitespace-normal text-muted-foreground">
                   {opportunity.claimedSummary}
@@ -87,7 +96,15 @@ export function OpportunityCards({
               <div>
                 <p className="flex flex-wrap items-center gap-2 font-medium text-foreground">
                   {opportunity.companyName}
-                  {opportunity.isDemo ? <DemoBadge /> : null}
+                  {opportunity.isDemo ? (
+                    <DemoBadge
+                      label={
+                        isDemoScenario(opportunity.id)
+                          ? "Synthetic demo scenario"
+                          : "Demo"
+                      }
+                    />
+                  ) : null}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   {instrumentLabels[opportunity.instrument]}

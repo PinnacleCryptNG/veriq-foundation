@@ -52,6 +52,22 @@ Findings use only **explicitly entered structured values**. Filenames, MIME type
 
 Outcomes are limited to **Consistent**, **Attention**, **Insufficient evidence**, and **Not assessed**. There is no Verified, safe, or approved result.
 
+## Guided demo scenario
+
+**Lumen Harbor Analytics** (`opp_demo_lumen`) is a synthetic packet labeled as demo data. It is not a real company.
+
+Expected findings when you click **Run checks** without editing:
+
+| Rule | Expected state | Why |
+| --- | --- | --- |
+| R01 | Attention | Claimed common stock vs structured SPV interest |
+| R02 | Attention | Structured terms say issuer approval is required |
+| R03 | Consistent | Asking-price reference matches USD 18.00 per share |
+| R04 | Insufficient evidence | Quantity, price, and fees are entered; stated payment is omitted |
+| R05 | Insufficient evidence | Completeness roll-up of the missing stated payment |
+
+400 × 18.00 + 25.00 = 7225.00. Entering `7225.00` as the stated payment and re-running should make R04 and R05 Consistent. The previous run stays in history.
+
 ## Local persistence
 
 - Opportunities: `veriq.opportunities.v1`
@@ -61,11 +77,12 @@ Browser `localStorage` is demo-only. It is not secure production storage.
 
 ## Manual review workflow
 
-1. Open an opportunity.
-2. Add an evidence record.
-3. Enter structured details (security type, transfer terms, valuation, and/or transaction amounts). Do not rely on the filename.
+1. Open **Lumen Harbor Analytics** from Overview or Opportunities.
+2. Read the review-readiness guide and the structured field groups on each evidence record.
+3. Enter values from the submitted evidence only. Do not guess from filenames.
 4. Open **Review workspace** and click **Run checks**.
-5. Inspect findings, evidence links, missing information, and limitations.
+5. Follow evidence links from findings to the corresponding record.
+6. Edit a structured value, run checks again, and confirm the previous run is unchanged.
 
 ## What is not included
 

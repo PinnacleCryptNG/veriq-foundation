@@ -9,7 +9,10 @@ import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
 import { PageHeader } from "@/components/page-header";
 import { PersistenceNotice } from "@/components/persistence-notice";
+import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
+import { ReviewReadiness } from "@/components/review/review-readiness";
 import { VerificationNotice } from "@/components/verification-notice";
+import { isDemoScenario } from "@/data/demo-opportunities";
 import { useOpportunities } from "@/hooks/use-opportunities";
 import {
   formatClaimedPrice,
@@ -71,7 +74,15 @@ export function OpportunityDetailPage({
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={opportunity.status} />
-            {opportunity.isDemo ? <DemoBadge /> : null}
+            {opportunity.isDemo ? (
+              <DemoBadge
+                label={
+                  isDemoScenario(opportunity.id)
+                    ? "Synthetic demo scenario"
+                    : "Demo"
+                }
+              />
+            ) : null}
             <LinkButton href={`/opportunities/${opportunity.id}/review`}>
               Open review workspace
             </LinkButton>
@@ -86,6 +97,7 @@ export function OpportunityDetailPage({
       <LimitationNotice />
       <PersistenceNotice />
       {opportunity.isDemo ? <DemoNotice /> : null}
+      {isDemoScenario(opportunity.id) ? <DemoScenarioNotice compact /> : null}
       {warning ? <Banner>{warning}</Banner> : null}
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
 
@@ -142,6 +154,8 @@ export function OpportunityDetailPage({
       ) : null}
 
       <p className="text-sm text-muted-foreground">{opportunity.limitationNote}</p>
+
+      <ReviewReadiness opportunity={opportunity} />
 
       <EvidenceSection
         opportunityId={opportunity.id}

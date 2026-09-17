@@ -11,9 +11,10 @@ export function PersistenceNotice({ className }: { className?: string }) {
     >
       <p>
         <span className="font-medium text-foreground">Local demo storage. </span>
-        Opportunities and evidence metadata are saved in this browser’s
-        localStorage. That is not secure production storage, is limited to this
-        device, and can be cleared by the browser.
+        Opportunities and evidence metadata, plus review runs, are saved in this
+        browser’s localStorage. That is not secure production storage, is
+        limited to this device, and can be cleared by the browser. Review runs
+        are stored separately from opportunity records.
       </p>
     </div>
   );
