@@ -1,17 +1,16 @@
 # VERIQ
 
-Private-market opportunity verification workspace. Reviewers will compare deal claims against submitted evidence and surface conflicts, missing materials, open questions, evidence-supported findings, and verification limits.
+Private-market opportunity review workspace. Reviewers capture deal claims, attach evidence metadata, enter structured evidence values, and run deterministic checks.
 
-This repository currently includes the application shell plus a **local demo intake**: create opportunities, inspect detail pages, and attach evidence metadata. It does not run verification, authenticate documents, or determine investment safety.
-
-Submitted documents do not establish legal ownership, issuer approval, document authenticity, or investment safety.
+This is a **demo review tool**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety.
 
 ## Stack
 
 - Next.js (App Router) and TypeScript
 - Tailwind CSS and shadcn/ui
 - Lucide icons
-- Zod for intake and storage validation
+- Zod for intake, structured evidence, and review-run validation
+- Vitest for the verification engine
 
 ## Run locally
 
@@ -22,11 +21,10 @@ npm run dev
 
 Open [http://127.0.0.1:43147](http://127.0.0.1:43147).
 
-Other commands:
-
 ```bash
 npm run lint
 npm run typecheck
+npm test
 npm run build
 ```
 
@@ -34,24 +32,45 @@ npm run build
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Workspace overview and opportunity queue |
-| `/opportunities` | Seeded demo records plus locally created opportunities |
-| `/opportunities/new` | Working intake form |
-| `/opportunities/[id]` | Opportunity detail and evidence records |
+| `/` | Workspace overview |
+| `/opportunities` | Demo and locally created opportunities |
+| `/opportunities/new` | Intake form |
+| `/opportunities/[id]` | Opportunity detail, evidence, structured values |
+| `/opportunities/[id]/review` | Deterministic review workspace |
+
+## Review checks (ruleset `2026.09.1`)
+
+| ID | Check |
+| --- | --- |
+| R01 | Security representation consistency |
+| R02 | Transferability review |
+| R03 | Valuation reference context |
+| R04 | Transaction arithmetic (integer minor units, 1-cent tolerance) |
+| R05 | Evidence completeness |
+
+Findings use only **explicitly entered structured values**. Filenames, MIME types, descriptions, and file bytes are not read as document contents.
+
+Outcomes are limited to **Consistent**, **Attention**, **Insufficient evidence**, and **Not assessed**. There is no Verified, safe, or approved result.
 
 ## Local persistence
 
-Opportunities and evidence metadata are stored in the browser’s `localStorage` under `veriq.opportunities.v1`.
+- Opportunities: `veriq.opportunities.v1`
+- Review runs: `veriq.verification-runs.v1` (separate from opportunity records)
 
-This is **demo-only**. It is not secure production storage, is limited to this device and browser, can be cleared by the user or the browser, and is subject to size limits. Seeded demo records live in `src/data/demo-opportunities.ts` and are merged in without overwriting user-created records.
+Browser `localStorage` is demo-only. It is not secure production storage.
 
-Attachments at or under 256 KB may be stored as local data URLs for preview. Larger files, or files that cannot be read, keep metadata only. File presence does not prove authenticity or ownership.
+## Manual review workflow
+
+1. Open an opportunity.
+2. Add an evidence record.
+3. Enter structured details (security type, transfer terms, valuation, and/or transaction amounts). Do not rely on the filename.
+4. Open **Review workspace** and click **Run checks**.
+5. Inspect findings, evidence links, missing information, and limitations.
 
 ## What is not included
 
-- Authentication
-- Backend or database
-- External APIs or AI calls
-- Automated verification findings
-- Payments
-- The verification engine
+- AI document extraction
+- External issuer or cap-table lookups
+- On-chain ownership checks
+- Legal conclusions or fraud detection
+- Authentication, backend, or payments

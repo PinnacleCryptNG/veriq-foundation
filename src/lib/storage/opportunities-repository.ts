@@ -18,6 +18,10 @@ import {
   type Opportunity,
   type OpportunityIntake,
 } from "@/types/opportunity";
+import {
+  structuredEvidenceDetailsSchema,
+  type StructuredEvidenceDetails,
+} from "@/types/verification";
 
 export type LoadResult = {
   opportunities: Opportunity[];
@@ -312,6 +316,44 @@ export function removeEvidenceRecord(
 
   const saved = persist(replaceOpportunity(current.opportunities, next));
 
+  return {
+    ...saved,
+    warning: current.warning,
+    opportunity: next,
+  };
+}
+
+export function updateEvidenceStructuredDetails(
+  opportunityId: string,
+  evidenceId: string,
+  details: StructuredEvidenceDetails,
+): MutateResult {
+  const parsedDetails = structuredEvidenceDetailsSchema.parse(details);
+  const current = loadOpportunities();
+  const existing = current.opportunities.find(
+    (opportunity) => opportunity.id === opportunityId,
+  );
+
+  if (!existing) {
+    throw new Error("Opportunity not found.");
+  }
+
+  const target = existing.evidence.find((item) => item.id === evidenceId);
+  if (!target) {
+    throw new Error("Evidence record not found.");
+  }
+
+  const next: Opportunity = {
+    ...existing,
+    evidence: existing.evidence.map((item) =>
+      item.id === evidenceId
+        ? { ...item, structuredDetails: parsedDetails }
+        : item,
+    ),
+    updatedAt: nowIso(),
+  };
+
+  const saved = persist(replaceOpportunity(current.opportunities, next));
   return {
     ...saved,
     warning: current.warning,

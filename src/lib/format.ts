@@ -5,11 +5,29 @@ import type {
   OpportunityInstrument,
   OpportunityStatus,
 } from "@/types/opportunity";
+import type {
+  FindingCategory,
+  SecurityInterest,
+  TransferRestriction,
+  ValuationReferenceType,
+  ValuationUnit,
+  VerificationState,
+} from "@/types/verification";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   dateStyle: "medium",
   timeZone: "UTC",
 });
+
+const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+
+export function formatDateTime(iso: string): string {
+  return `${dateTimeFormatter.format(new Date(iso))} UTC`;
+}
 
 export function formatDate(iso: string): string {
   return dateFormatter.format(new Date(iso));
@@ -38,6 +56,47 @@ export const currencyLabels: Record<CurrencyCode, string> = {
   USD: "USD",
   EUR: "EUR",
   GBP: "GBP",
+};
+
+export const securityInterestLabels: Record<SecurityInterest, string> = {
+  common_stock: "Common stock",
+  preferred_stock: "Preferred stock",
+  safe: "SAFE",
+  employee_tender: "Employee tender",
+  spv_interest: "SPV interest",
+};
+
+export const transferRestrictionLabels: Record<TransferRestriction, string> = {
+  issuer_approval_required: "Issuer approval required",
+  restricted: "Transfer restricted",
+  no_restriction_stated: "No restriction stated",
+};
+
+export const valuationUnitLabels: Record<ValuationUnit, string> = {
+  per_share: "Per share / unit",
+  total: "Total",
+};
+
+export const valuationReferenceTypeLabels: Record<ValuationReferenceType, string> = {
+  asking_price: "Asking price",
+  indicative_valuation: "Indicative valuation",
+  appraisal: "Appraisal",
+  completed_transaction: "Completed transaction",
+};
+
+export const verificationStateLabels: Record<VerificationState, string> = {
+  consistent: "Consistent",
+  attention: "Attention",
+  insufficient_evidence: "Insufficient evidence",
+  not_assessed: "Not assessed",
+};
+
+export const findingCategoryLabels: Record<FindingCategory, string> = {
+  security_representation: "Security representation",
+  transferability: "Transferability",
+  valuation_reference: "Valuation reference",
+  transaction_arithmetic: "Transaction arithmetic",
+  evidence_completeness: "Evidence completeness",
 };
 
 export const evidenceTypeLabels: Record<EvidenceType, string> = {

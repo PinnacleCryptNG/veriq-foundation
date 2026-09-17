@@ -19,6 +19,8 @@ import {
   evidenceTypeSchema,
   type Evidence,
 } from "@/types/opportunity";
+import type { StructuredEvidenceDetails } from "@/types/verification";
+import { StructuredDetailsEditor } from "@/components/opportunities/structured-details-editor";
 
 type EvidenceSectionProps = {
   opportunityId: string;
@@ -29,6 +31,11 @@ type EvidenceSectionProps = {
     file?: File | null,
   ) => Promise<unknown>;
   onRemove: (opportunityId: string, evidenceId: string) => void;
+  onUpdateDetails: (
+    opportunityId: string,
+    evidenceId: string,
+    details: StructuredEvidenceDetails,
+  ) => void;
 };
 
 const evidenceTypes = evidenceTypeSchema.options;
@@ -38,6 +45,7 @@ export function EvidenceSection({
   evidence,
   onAdd,
   onRemove,
+  onUpdateDetails,
 }: EvidenceSectionProps) {
   const [type, setType] = useState<(typeof evidenceTypes)[number]>(
     "ownership_document",
@@ -113,7 +121,8 @@ export function EvidenceSection({
           {evidence.map((item) => (
             <li
               key={item.id}
-              className="rounded-lg border border-border bg-card p-3"
+              id={`evidence-${item.id}`}
+              className="scroll-mt-20 rounded-lg border border-border bg-card p-3"
             >
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="space-y-1">
@@ -162,6 +171,15 @@ export function EvidenceSection({
                 >
                   Remove
                 </Button>
+              </div>
+              <div className="mt-3">
+                <StructuredDetailsEditor
+                  evidenceId={item.id}
+                  details={item.structuredDetails}
+                  onSave={(details) =>
+                    onUpdateDetails(opportunityId, item.id, details)
+                  }
+                />
               </div>
             </li>
           ))}

@@ -1,19 +1,15 @@
 import { z } from "zod";
+import { currencySchema, opportunityInstrumentSchema } from "@/types/primitives";
+import { structuredEvidenceDetailsSchema } from "@/types/verification";
+
+export { currencySchema, opportunityInstrumentSchema } from "@/types/primitives";
+export type { CurrencyCode, OpportunityInstrument } from "@/types/primitives";
 
 export const opportunityStatusSchema = z.enum([
   "intake_incomplete",
   "evidence_pending",
   "queued_for_review",
 ]);
-
-export const opportunityInstrumentSchema = z.enum([
-  "common_stock",
-  "preferred_stock",
-  "safe",
-  "employee_tender",
-]);
-
-export const currencySchema = z.enum(["USD", "EUR", "GBP"]);
 
 export const evidenceTypeSchema = z.enum([
   "ownership_document",
@@ -38,6 +34,7 @@ export const evidenceSchema = z.object({
   description: z.string().min(1).optional(),
   file: evidenceFileSchema.optional(),
   storageNote: z.string().min(1).optional(),
+  structuredDetails: structuredEvidenceDetailsSchema.optional(),
   createdAt: z.iso.datetime(),
 });
 
@@ -119,8 +116,6 @@ export const storedStateSchema = z.object({
 });
 
 export type OpportunityStatus = z.infer<typeof opportunityStatusSchema>;
-export type OpportunityInstrument = z.infer<typeof opportunityInstrumentSchema>;
-export type CurrencyCode = z.infer<typeof currencySchema>;
 export type EvidenceType = z.infer<typeof evidenceTypeSchema>;
 export type EvidenceFile = z.infer<typeof evidenceFileSchema>;
 export type Evidence = z.infer<typeof evidenceSchema>;

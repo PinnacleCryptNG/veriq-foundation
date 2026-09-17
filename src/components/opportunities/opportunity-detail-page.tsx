@@ -31,6 +31,7 @@ export function OpportunityDetailPage({
     persistError,
     addEvidence,
     removeEvidence,
+    updateEvidenceDetails,
   } = useOpportunities();
   const opportunity = getById(opportunityId);
 
@@ -71,6 +72,9 @@ export function OpportunityDetailPage({
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={opportunity.status} />
             {opportunity.isDemo ? <DemoBadge /> : null}
+            <LinkButton href={`/opportunities/${opportunity.id}/review`}>
+              Open review workspace
+            </LinkButton>
             <LinkButton href="/opportunities" variant="outline">
               Back to opportunities
             </LinkButton>
@@ -144,6 +148,7 @@ export function OpportunityDetailPage({
         evidence={opportunity.evidence}
         onAdd={addEvidence}
         onRemove={removeEvidence}
+        onUpdateDetails={updateEvidenceDetails}
       />
     </div>
   );

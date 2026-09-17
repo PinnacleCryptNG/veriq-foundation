@@ -9,12 +9,14 @@ import {
   getServerOpportunitiesSnapshot,
   removeEvidenceRecord,
   subscribeToOpportunities,
+  updateEvidenceStructuredDetails,
 } from "@/lib/storage/opportunities-repository";
 import type {
   EvidenceIntake,
   Opportunity,
   OpportunityIntake,
 } from "@/types/opportunity";
+import type { StructuredEvidenceDetails } from "@/types/verification";
 
 export function useOpportunities() {
   const result = useSyncExternalStore(
@@ -46,6 +48,21 @@ export function useOpportunities() {
     [],
   );
 
+  const updateEvidenceDetails = useCallback(
+    (
+      opportunityId: string,
+      evidenceId: string,
+      details: StructuredEvidenceDetails,
+    ) => {
+      return updateEvidenceStructuredDetails(
+        opportunityId,
+        evidenceId,
+        details,
+      );
+    },
+    [],
+  );
+
   const getById = useCallback(
     (id: string): Opportunity | undefined =>
       result.opportunities.find((opportunity) => opportunity.id === id),
@@ -60,6 +77,7 @@ export function useOpportunities() {
     create,
     addEvidence,
     removeEvidence,
+    updateEvidenceDetails,
     getById,
   };
 }
