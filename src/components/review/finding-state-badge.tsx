@@ -4,9 +4,9 @@ import { verificationStateLabels } from "@/lib/format";
 import type { VerificationState } from "@/types/verification";
 
 const stateClassName: Record<VerificationState, string> = {
-  consistent: "border-primary/25 bg-primary/10 text-primary",
-  attention: "border-border bg-secondary text-secondary-foreground",
-  insufficient_evidence: "border-border bg-transparent text-muted-foreground",
+  consistent: "border-[#25D0A5]/40 bg-[#25D0A5]/10 text-[#25D0A5]",
+  attention: "border-[#F5B84B]/40 bg-[#F5B84B]/10 text-[#F5B84B]",
+  insufficient_evidence: "border-border bg-muted/40 text-muted-foreground",
   not_assessed: "border-border bg-transparent text-foreground",
 };
 

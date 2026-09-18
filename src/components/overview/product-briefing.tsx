@@ -27,7 +27,41 @@ const briefing = [
   },
 ] as const;
 
-export function ProductBriefing() {
+export function ProductBriefing({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <details className="group rounded-xl border border-border bg-card/40 p-4 transition-colors hover:bg-card/60">
+        <summary className="flex cursor-pointer items-center justify-between text-xs font-semibold text-muted-foreground uppercase tracking-wider hover:text-foreground">
+          <span>About this workspace · Technical specification</span>
+          <span className="text-primary text-xs normal-case group-open:hidden">
+            Show details →
+          </span>
+          <span className="text-muted-foreground text-xs normal-case hidden group-open:inline">
+            Hide details ↑
+          </span>
+        </summary>
+        <div className="mt-4 pt-3 border-t border-border/60 space-y-3">
+          <p className="max-w-3xl text-xs leading-relaxed text-muted-foreground">
+            {siteConfig.description}
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {briefing.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-lg border border-border/80 bg-background/50 p-3"
+              >
+                <h3 className="text-xs font-semibold text-foreground">{item.title}</h3>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                  {item.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </details>
+    );
+  }
+
   return (
     <section aria-labelledby="product-briefing-heading" className="space-y-3">
       <div className="space-y-1">
