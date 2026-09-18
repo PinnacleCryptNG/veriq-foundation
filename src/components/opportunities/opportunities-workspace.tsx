@@ -1,7 +1,6 @@
 "use client";
 
 import { EmptyState, LoadingState, Banner } from "@/components/feedback";
-import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
 import { PageContainer } from "@/components/page-container";
 import { PageHeader } from "@/components/page-header";
@@ -28,9 +27,10 @@ export function OpportunitiesWorkspace() {
         }
       />
 
-      <LimitationNotice />
-      <PersistenceNotice />
-      <DemoScenarioNotice />
+      <div className="space-y-3">
+        <DemoScenarioNotice compact />
+        <PersistenceNotice />
+      </div>
       {warning ? <Banner>{warning}</Banner> : null}
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
 

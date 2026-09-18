@@ -103,11 +103,11 @@ Match this script to the current UI. Labels in **bold** exist in the app. Do not
 
 ## 1. Introduce VERIQ (~20 seconds) — Overview (`/`)
 
-**Say:** “VERIQ is a local review workspace for private and pre-IPO packets. It compares claimed terms with structured values a reviewer types. It does not prove ownership, authenticity, or that an investment is safe.”
+**Say:** “VERIQ helps a private-market buyer spot mismatches between what the seller told you and what the available evidence supports — before you send money. It is an objective diligence checklist, not legal or ownership certification.”
 
-**Do:** Point to **About this workspace**, **Implemented checks · ruleset 2026.09.1**, and the **Market reference — not submitted evidence** notice.
+**Do:** Point to the hero headline **“Spot the mismatches before you send money”**, the 3-step example story, and the **Featured Guided Demo** for Lumen Harbor Analytics.
 
-**Say:** “Five deterministic checks. Consistent means entered numbers matched — not that the deal is verified. PreStocks is a separate catalog, not a finding.”
+**Say:** “Five transparent checks. Consistent means entered numbers matched — not that the deal is approved or safe. PreStocks serves as secondary market context.”
 
 ## 2. PreStocks catalog (~25 seconds)
 
@@ -129,9 +129,11 @@ Match this script to the current UI. Labels in **bold** exist in the app. Do not
 
 **Say:** “Synthetic packet, not a real company. Claimed 400 common shares at 18 dollars. Structured evidence already has an SPV-interest memo, issuer-approval terms, a matching asking-price worksheet, and a transaction worksheet with no stated payment.”
 
-**Do:** Point at **Review readiness** (R04 still needs stated payment). Click **Open review workspace**. Click **Run checks**.
+**Do:** Point at **Review readiness** (R04 still needs stated payment). Click **Open review workspace**. Click **Run checks now** (or **Run checks**).
 
-**Highlight:** Attention 2, Insufficient evidence 2, Consistent 1 — **R01** Attention, **R02** Attention, **R03** Consistent, **R04** Insufficient evidence, **R05** Insufficient evidence.
+**Highlight:** The 3 primary sections: (1) What the seller claims, (2) What information or evidence was entered, and (3) What VERIQ found. Under findings, read the 3 plain-English buyer answers: What was found, Why it matters, and What you can do. Click **Show values & rule info** to demonstrate progressive disclosure of technical audit details and exact compared fields.
+
+**Highlight states:** Attention 2, Insufficient evidence 2, Consistent 1 — **R01** Attention, **R02** Attention, **R03** Consistent, **R04** Insufficient evidence, **R05** Insufficient evidence.
 
 **Say:** “Mixed outcomes in one packet. That mix is not a verified or safe result.”
 

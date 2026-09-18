@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { LimitationNotice } from "@/components/limitation-notice";
 import { LinkButton } from "@/components/link-button";
 import { OpportunityIntakeForm } from "@/components/opportunities/opportunity-intake-form";
 import { PageContainer } from "@/components/page-container";
@@ -24,9 +23,10 @@ export default function NewOpportunityPage() {
         }
       />
 
-      <LimitationNotice />
-      <VerificationNotice />
-      <PersistenceNotice />
+      <div className="space-y-3">
+        <VerificationNotice />
+        <PersistenceNotice />
+      </div>
 
       <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
         <OpportunityIntakeForm />

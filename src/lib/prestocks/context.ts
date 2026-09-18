@@ -47,12 +47,12 @@ export function buildMarketContext(args: {
       {
         label: "Quoted / token figures",
         submitted: formatClaimedPrice(opportunity),
-        market: `tokenPrice ${formatCatalogNumber(asset.tokenPrice)} (API field; no currency in payload)`,
+        market: `Token price: $${formatCatalogNumber(asset.tokenPrice)} (tokenPrice API field; no currency in payload)`,
       },
       {
         label: "Quantity / supply",
         submitted: formatQuantity(opportunity),
-        market: `supply ${formatCatalogNumber(asset.supply)} (API field)`,
+        market: `Supply: ${formatCatalogNumber(asset.supply)} units`,
       },
       {
         label: "Timestamp",

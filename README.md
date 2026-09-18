@@ -1,8 +1,10 @@
 # VERIQ
 
-Evidence-based review workspace for **private and pre-IPO equity opportunity packets**. Reviewers capture claimed deal terms, attach evidence metadata, enter structured evidence values, and run deterministic checks under ruleset **2026.09.1**.
+Spot the mismatches between what the seller told you and what the available evidence supports — before you send money.
 
-This is a **local demo review tool**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety.
+VERIQ is an evidence-based review workspace for **private and pre-IPO secondary opportunities**. Reviewers capture claimed deal terms, attach evidence documents, enter structured values, and run deterministic verification checks under ruleset **2026.09.1**.
+
+This is an **objective diligence checklist**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety. Consistent findings do not mean an investment is safe or title is certified.
 
 ## Documentation
 

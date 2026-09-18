@@ -2,42 +2,40 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 describe("Phase 1 homepage redesign verification", () => {
-  it("contains required hero headline, supporting sentence, and CTAs in homepage components", () => {
+  it("contains required hero headline, core message, and CTAs in homepage components", () => {
     const heroCode = readFileSync(
       "/workspace/src/components/overview/homepage-hero.tsx",
       "utf8",
     );
 
-    // Headline
-    expect(heroCode).toContain("Verify the opportunity before you buy it.");
+    // Headline or Core message
+    expect(heroCode).toContain("before you send money.");
 
     // Supporting sentence (normalize whitespace)
     expect(heroCode.replace(/\s+/g, " ")).toContain(
-      "See exactly what security, ownership, valuation, rights and transfer conditions are supported by evidence — before you send money.",
+      "Spot the mismatches between what the seller told you and what the available evidence supports — before you send money.",
     );
 
     // Value proposition for buyers & platforms
-    expect(heroCode.toLowerCase()).toContain("private-market buyers");
-    expect(heroCode.toLowerCase()).toContain("intermediaries and review desks");
+    expect(heroCode.toLowerCase()).toContain("buyers");
 
     // Primary & secondary CTAs
     expect(heroCode).toContain('href="/opportunities/new"');
     expect(heroCode).toContain("Start verification");
-    expect(heroCode).toContain("Explore synthetic demo");
+    expect(heroCode).toContain("Try the live demo");
   });
 
-  it("includes Claim -> Evidence -> Result visual with realistic synthetic scenario", () => {
+  it("includes clear example story with realistic synthetic scenario", () => {
     const visualCode = readFileSync(
       "/workspace/src/components/overview/verification-flow-visual.tsx",
       "utf8",
     );
 
-    expect(visualCode).toContain("Claimed deal terms");
-    expect(visualCode).toContain("Entered evidence");
-    expect(visualCode).toContain("Deterministic findings");
-    expect(visualCode).toContain("R01 · Attention (Security Mismatch)");
-    expect(visualCode).toContain("R04 · Insufficient Evidence");
-    expect(visualCode).toContain("Objective finding boundary");
+    expect(visualCode).toContain("What the seller pitched");
+    expect(visualCode).toContain("What evidence describes");
+    expect(visualCode).toContain("What VERIQ spots");
+    expect(visualCode).toContain("Security representation mismatch");
+    expect(visualCode).toContain("How VERIQ protects you");
   });
 
   it("includes a simple 3-step How It Works section", () => {

@@ -13,7 +13,6 @@ import { DemoScenarioNotice } from "@/components/review/demo-scenario-notice";
 import { DemoWalkthroughHint } from "@/components/review/demo-walkthrough-hint";
 import { PreStocksReferencePanel } from "@/components/prestocks/reference-panel";
 import { ReviewReadiness } from "@/components/review/review-readiness";
-import { VerificationNotice } from "@/components/verification-notice";
 import { DEMO_SCENARIO_ID, isDemoScenario } from "@/data/demo-opportunities";
 import { useOpportunities } from "@/hooks/use-opportunities";
 import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
@@ -111,7 +110,6 @@ export function OpportunityDetailPage({
         }
       />
 
-      <VerificationNotice />
       {opportunity.isDemo && !isDemoScenario(opportunity.id) ? <DemoNotice /> : null}
       {isDemoScenario(opportunity.id) ? (
         <>

@@ -19,7 +19,7 @@ const steps = [
     number: "03",
     title: "Review findings & gaps",
     description:
-      "Run ruleset 2026.09.1 to see exact Consistent, Attention, and Insufficient evidence findings. Every calculation and field used is cited.",
+      "Run automated checks to see exact Consistent, Attention, and Insufficient evidence findings in plain English. Catch hidden fees and security mismatches early.",
     icon: CheckSquare2,
   },
 ] as const;

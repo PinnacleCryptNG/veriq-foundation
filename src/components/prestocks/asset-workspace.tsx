@@ -155,9 +155,8 @@ export function PreStocksAssetWorkspace({ symbol }: { symbol: string }) {
                   </div>
                 </dl>
                 <p className="mt-3 text-xs text-muted-foreground">
-                  tokenPrice {formatCatalogNumber(asset.tokenPrice)} versus markPrice{" "}
-                  {formatCatalogNumber(asset.markPrice)} is arithmetic on two API
-                  fields. It is not a fairness, premium, or investment conclusion.
+                  Comparing Token price (${formatCatalogNumber(asset.tokenPrice)}) with Mark price (${formatCatalogNumber(asset.markPrice)})
+                  reflects the spread between latest secondary trading and recent benchmark marks. It is arithmetic on two API fields, not an investment rating or fairness conclusion.
                 </p>
               </section>
               {opportunity ? (

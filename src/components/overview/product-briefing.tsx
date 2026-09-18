@@ -30,21 +30,29 @@ const briefing = [
 export function ProductBriefing({ compact = false }: { compact?: boolean }) {
   if (compact) {
     return (
-      <details className="group rounded-xl border border-border bg-card/40 p-4 transition-colors hover:bg-card/60">
-        <summary className="flex cursor-pointer items-center justify-between text-xs font-semibold text-muted-foreground uppercase tracking-wider hover:text-foreground">
-          <span>About this workspace · Technical specification</span>
-          <span className="text-primary text-xs normal-case group-open:hidden">
-            Show details →
+      <section className="rounded-xl border border-border bg-card/40 p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            About this workspace · System specifications
+          </h2>
+          <span className="text-xs text-muted-foreground font-mono">
+            Ruleset 2026.09.1
           </span>
-          <span className="text-muted-foreground text-xs normal-case hidden group-open:inline">
-            Hide details ↑
-          </span>
-        </summary>
-        <div className="mt-4 pt-3 border-t border-border/60 space-y-3">
-          <p className="max-w-3xl text-xs leading-relaxed text-muted-foreground">
-            {siteConfig.description}
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        </div>
+        <p className="max-w-3xl text-xs leading-relaxed text-muted-foreground">
+          {siteConfig.description}
+        </p>
+        <details className="group pt-2 border-t border-border/60">
+          <summary className="flex cursor-pointer items-center justify-between text-xs font-medium text-primary hover:underline">
+            <span>Show full technical specifications and boundaries</span>
+            <span className="text-muted-foreground text-[11px] group-open:hidden">
+              Expand ↓
+            </span>
+            <span className="text-muted-foreground text-[11px] hidden group-open:inline">
+              Collapse ↑
+            </span>
+          </summary>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {briefing.map((item) => (
               <article
                 key={item.title}
@@ -57,8 +65,8 @@ export function ProductBriefing({ compact = false }: { compact?: boolean }) {
               </article>
             ))}
           </div>
-        </div>
-      </details>
+        </details>
+      </section>
     );
   }
 

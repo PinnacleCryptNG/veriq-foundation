@@ -1,8 +1,7 @@
 import { FindingStateBadge } from "@/components/review/finding-state-badge";
 import { SectionHeading } from "@/components/section-heading";
-import { formatDateTime, verificationStateHelp, verificationStateLabels } from "@/lib/format";
+import { formatDateTime, verificationStateLabels } from "@/lib/format";
 import type {
-  Finding,
   VerificationRun,
   VerificationState,
 } from "@/types/verification";
@@ -24,13 +23,12 @@ export function ReviewReport({
   const missing = unique(
     run.findings.flatMap((finding) => finding.missingInformation),
   );
-  const mainFindings = notableFindings(run.findings);
 
   return (
-    <section className="rounded-lg border border-border bg-card p-4">
+    <section className="rounded-xl border border-border bg-card/60 p-4 sm:p-5 space-y-4">
       <SectionHeading
-        title="Review summary"
-        description={`${companyName} · ${formatDateTime(run.timestamp)} · Ruleset ${run.rulesetVersion}`}
+        title="Verification summary"
+        description={`${companyName} · Verified at ${formatDateTime(run.timestamp)}`}
         actions={
           <div className="flex flex-wrap gap-2">
             {STATE_ORDER.map((state) => (
@@ -39,61 +37,52 @@ export function ReviewReport({
                 className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"
               >
                 <FindingStateBadge state={state} />
-                {run.summary[state]}
+                <span className="font-semibold text-foreground">{run.summary[state]}</span>
               </span>
             ))}
           </div>
         }
       />
 
-      <p className="mt-3 text-xs leading-5 text-muted-foreground">
-        {verificationStateHelp.consistent}
+      <p className="text-xs leading-5 text-muted-foreground">
+        Checks evaluate whether entered terms match submitted documents. A &apos;Consistent&apos; result means numbers align, not that an investment is safe or title is certified.
       </p>
 
-      <div className="mt-4 grid gap-3 lg:grid-cols-2">
-        <div>
-          <h3 className="text-[11px] tracking-wide text-muted-foreground uppercase">
-            Main findings
+      <div className="grid gap-4 sm:grid-cols-2 pt-2 border-t border-border/60">
+        <div className="space-y-1.5">
+          <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">
+            Key findings overview
           </h3>
-          <ul className="mt-1 space-y-1 text-sm text-foreground">
-            {mainFindings.map((finding) => (
-              <li key={finding.id}>
-                <span className="text-muted-foreground">
+          <ul className="space-y-1.5 text-xs text-foreground">
+            {run.findings.map((finding) => (
+              <li key={finding.id} className="flex items-start gap-1.5">
+                <span className="font-semibold shrink-0">
                   {finding.ruleId} · {verificationStateLabels[finding.state]}:
-                </span>{" "}
-                {finding.title}
+                </span>
+                <span className="text-muted-foreground">{finding.title}</span>
               </li>
             ))}
           </ul>
         </div>
-        <div>
-          <h3 className="text-[11px] tracking-wide text-muted-foreground uppercase">
+        <div className="space-y-1.5">
+          <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">
             Missing information
           </h3>
           {missing.length > 0 ? (
-            <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-foreground">
+            <ul className="list-disc space-y-1 pl-4 text-xs text-muted-foreground">
               {missing.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           ) : (
-            <p className="mt-1 text-sm text-muted-foreground">
-              This run did not record missing structured fields. That is not a
-              complete diligence packet and not independent confirmation.
+            <p className="text-xs text-muted-foreground">
+              All structured fields required by the five evaluation checks were provided.
             </p>
           )}
         </div>
       </div>
     </section>
   );
-}
-
-function notableFindings(findings: Finding[]): Finding[] {
-  const ranked = [...findings].sort(
-    (left, right) =>
-      STATE_ORDER.indexOf(left.state) - STATE_ORDER.indexOf(right.state),
-  );
-  return ranked;
 }
 
 function unique(values: string[]): string[] {

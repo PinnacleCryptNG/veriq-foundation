@@ -31,22 +31,35 @@ export function AssetSummary({
         </div>
       </div>
       <dl className="mt-3 grid gap-2 sm:grid-cols-2">
-        <Field label="tokenPrice" value={formatCatalogNumber(asset.tokenPrice)} />
-        <Field label="markPrice" value={formatCatalogNumber(asset.markPrice)} />
         <Field
-          label="impliedValuation"
-          value={formatCatalogNumber(asset.impliedValuation)}
+          label="Token price (tokenPrice)"
+          value={`$${formatCatalogNumber(asset.tokenPrice)}`}
         />
         <Field
-          label="markValuation"
-          value={formatCatalogNumber(asset.markValuation)}
+          label="Mark price (markPrice)"
+          value={`$${formatCatalogNumber(asset.markPrice)}`}
         />
-        <Field label="supply" value={formatCatalogNumber(asset.supply)} />
-        <Field label="contract_address" value={asset.contract_address} mono />
+        <Field
+          label="Implied valuation (impliedValuation)"
+          value={`$${formatCatalogNumber(asset.impliedValuation)}`}
+        />
+        <Field
+          label="Mark valuation (markValuation)"
+          value={`$${formatCatalogNumber(asset.markValuation)}`}
+        />
+        <Field
+          label="Token supply (supply)"
+          value={formatCatalogNumber(asset.supply)}
+        />
+        <Field
+          label="Contract address"
+          value={asset.contract_address}
+          mono
+        />
       </dl>
       <p className="mt-2 text-xs text-muted-foreground">
-        Field names are as returned by the PreStocks catalog. The payload does not
-        include a currency code or a market-data timestamp.
+        PreStocks token prices track underlying SPVs holding private shares.
+        Shown as secondary market benchmark context only.
       </p>
       {href ? (
         <div className="mt-3">

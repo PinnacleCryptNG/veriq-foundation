@@ -1,6 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  Play,
+  FileCheck,
+  History,
+  Info,
+  Layers,
+  Sparkles,
+} from "lucide-react";
 import { Banner, EmptyState, LoadingState } from "@/components/feedback";
 import { DemoBadge } from "@/components/opportunities/demo-badge";
 import { StatusBadge } from "@/components/opportunities/status-badge";
@@ -149,10 +157,11 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
   }
 
   return (
-    <PageContainer>
+    <PageContainer width="6xl" className="space-y-8">
+      {/* Page Header */}
       <PageHeader
         title={`Review · ${opportunity.companyName}`}
-        description="Deterministic checks on entered claims and structured evidence values. Intake status is separate from review findings."
+        description="Verify this opportunity against entered evidence before sending money. Spot mismatches between seller promises and document terms."
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={opportunity.status} />
@@ -165,7 +174,12 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
                 }
               />
             ) : null}
-            <Button type="button" onClick={runChecks} disabled={isRunning}>
+            <Button
+              type="button"
+              onClick={runChecks}
+              disabled={isRunning}
+              className="bg-primary text-primary-foreground font-semibold shadow-md shadow-primary/20 hover:bg-primary/90"
+            >
               {isRunning ? "Running…" : "Run checks"}
             </Button>
             <LinkButton href={`/opportunities/${opportunity.id}`} variant="outline">
@@ -181,9 +195,9 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
         }
       />
 
-      <DemoReviewNotice />
+      {/* Demo helper walkthrough */}
       {isDemoScenario(opportunity.id) ? (
-        <>
+        <div className="space-y-3">
           <DemoScenarioNotice compact />
           <DemoWalkthroughHint
             surface="review"
@@ -191,9 +205,10 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
             latestRun={latest}
             selectedRun={selectedRun}
           />
-        </>
+        </div>
       ) : null}
-      <PersistenceNotice />
+
+      {/* Alerts & Historical Banners */}
       {opportunityWarning ? <Banner>{opportunityWarning}</Banner> : null}
       {runsWarning ? <Banner>{runsWarning}</Banner> : null}
       {runError ? <Banner tone="danger">{runError}</Banner> : null}
@@ -212,148 +227,334 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
         </Banner>
       ) : null}
 
-      <section className="rounded-lg border border-border bg-card p-4">
-        <SectionHeading title="Opportunity summary" />
-        <dl className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          <SummaryField label="Opportunity" value={opportunity.companyName} />
-          <SummaryField
-            label="Security / interest"
-            value={instrumentLabels[opportunity.instrument]}
-          />
-          <SummaryField label="Quantity offered" value={formatQuantity(opportunity)} />
-          <SummaryField label="Quoted price" value={formatClaimedPrice(opportunity)} />
-        </dl>
-      </section>
-
-      <ReviewReadiness opportunity={opportunity} context="review" />
-      <FindingStateLegend />
-
+      {/* Prominent Action Banner before first run */}
       {!selectedRun ? (
-        <EmptyState
-          title="No review run yet"
-          description="Run checks to compare opportunity claims with structured evidence values. Uploaded files are not read. Results will not say the opportunity is verified or safe."
-          actions={
-            <Button type="button" onClick={runChecks} disabled={isRunning}>
-              {isRunning ? "Running…" : "Run checks"}
-            </Button>
-          }
-        />
-      ) : (
-        <>
-          <ReviewReport companyName={opportunity.companyName} run={selectedRun} />
+        <div className="rounded-2xl border border-primary/40 bg-gradient-to-r from-primary/15 via-card/70 to-card/50 p-6 sm:p-8 space-y-4 text-center sm:text-left sm:flex sm:items-center sm:justify-between">
+          <div className="space-y-1.5 max-w-xl">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
+              <Sparkles className="size-3.5" />
+              Ready for Verification
+            </div>
+            <h2 className="text-xl font-bold text-foreground">
+              Run checks to evaluate this opportunity
+            </h2>
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              VERIQ will compare the seller&apos;s claimed instrument, quantity, price, and payment terms against the entered structured evidence records.
+            </p>
+          </div>
+          <Button
+            type="button"
+            size="lg"
+            onClick={runChecks}
+            disabled={isRunning}
+            className="h-11 px-6 font-semibold shadow-lg shadow-primary/25 hover:shadow-primary/40 shrink-0"
+          >
+            <Play className="size-4 fill-current mr-1.5" />
+            {isRunning ? "Running checks…" : "Run checks now"}
+          </Button>
+        </div>
+      ) : null}
 
-          {STATE_ORDER.map((state) => {
-            const findings = selectedRun.findings.filter(
-              (finding) => finding.state === state,
-            );
-            if (findings.length === 0) {
-              return null;
-            }
-            return (
-              <section key={state} className="space-y-3">
-                <h2 className="text-sm font-medium text-foreground">
-                  {verificationStateLabels[state]}
-                </h2>
-                <ul className="space-y-3">
-                  {findings.map((finding) => (
-                    <FindingCard
-                      key={finding.id}
-                      finding={finding}
-                      opportunityId={opportunity.id}
-                      evidence={opportunity.evidence}
-                      inputSnapshot={selectedRun.inputSnapshot}
-                      evidenceCatalog={selectedRun.evidenceCatalog}
-                    />
-                  ))}
-                </ul>
-              </section>
-            );
-          })}
-        </>
-      )}
-
-      {opportunity.evidence.length > 0 ? (
-        <section className="space-y-2">
-          <SectionHeading
-            title="Evidence records in this review"
-            description="Links open the current opportunity record. Historical findings still use the snapshotted catalog for that run."
-          />
-          <ul className="space-y-2">
-            {opportunity.evidence.map((item) => (
-              <li
-                key={item.id}
-                id={`evidence-${item.id}`}
-                className="scroll-mt-20 rounded-lg border border-border bg-card px-3 py-2 text-sm"
+      {/* 3 Primary Architectural Sections */}
+      <div className="space-y-8">
+        {/* SECTION 1: What the seller claims */}
+        <section aria-labelledby="section-claims-heading" className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2
+                id="section-claims-heading"
+                className="text-xs font-semibold uppercase tracking-wider text-primary"
               >
-                <p className="font-medium break-words text-foreground">
-                  {item.displayName}
-                </p>
-                <p className="text-xs break-all text-muted-foreground">
-                  {item.id} · Structured values only. File contents are not used.
-                </p>
-                <LinkButton
-                  href={`/opportunities/${opportunity.id}#evidence-${item.id}`}
-                  variant="link"
-                  size="sm"
-                >
-                  Open on opportunity page
-                </LinkButton>
-              </li>
-            ))}
-          </ul>
+                Section 1 · Baseline terms
+              </h2>
+              <p className="text-lg font-bold text-foreground">
+                What the seller claims
+              </p>
+            </div>
+            <LinkButton
+              href={`/opportunities/${opportunity.id}`}
+              variant="link"
+              size="sm"
+            >
+              Edit claims on opportunity page →
+            </LinkButton>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card/60 p-4 sm:p-5">
+            <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <SummaryField label="Company" value={opportunity.companyName} />
+              <SummaryField
+                label="Claimed Security / Interest"
+                value={instrumentLabels[opportunity.instrument]}
+              />
+              <SummaryField
+                label="Offered Quantity"
+                value={formatQuantity(opportunity)}
+              />
+              <SummaryField
+                label="Quoted Price"
+                value={formatClaimedPrice(opportunity)}
+              />
+            </dl>
+            {opportunity.claimedSummary ? (
+              <p className="mt-3 pt-3 border-t border-border/60 text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">Seller memo summary: </span>
+                {opportunity.claimedSummary}
+              </p>
+            ) : null}
+          </div>
         </section>
-      ) : (
-        <EmptyState
-          title="No evidence records on this opportunity"
-          description="Checks can still run against claimed opportunity fields. Missing structured values produce Insufficient evidence, not a positive confirmation."
-        />
-      )}
 
-      <section className="space-y-2">
-        <SectionHeading
-          title="Review history"
-          description="Each run is stored separately from opportunity records. Editing structured evidence does not change previous findings."
-        />
-        {runs.length === 0 ? (
-          <EmptyState
-            title="No saved runs"
-            description="After you run checks, snapshots appear here so you can compare later edits without losing earlier results."
-          />
-        ) : (
-          <ul className="space-y-2">
-            {runs.map((run, index) => (
-              <li key={run.id}>
-                <button
-                  type="button"
-                  onClick={() => setSelectedRunId(run.id)}
-                  className={`w-full rounded-lg border px-3 py-2 text-left text-sm hover:bg-muted/30 ${
-                    selectedRun?.id === run.id
-                      ? "border-primary/40 bg-primary/5"
-                      : "border-border bg-card"
-                  }`}
-                  aria-current={selectedRun?.id === run.id}
+        {/* SECTION 2: What information or evidence was entered */}
+        <section aria-labelledby="section-evidence-heading" className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2
+                id="section-evidence-heading"
+                className="text-xs font-semibold uppercase tracking-wider text-primary"
+              >
+                Section 2 · Supporting documentation
+              </h2>
+              <p className="text-lg font-bold text-foreground">
+                What information or evidence was entered
+              </p>
+            </div>
+            <LinkButton
+              href={`/opportunities/${opportunity.id}#evidence`}
+              variant="link"
+              size="sm"
+            >
+              Add or edit evidence →
+            </LinkButton>
+          </div>
+
+          {opportunity.evidence.length > 0 ? (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {opportunity.evidence.map((item) => (
+                <div
+                  key={item.id}
+                  id={`evidence-${item.id}`}
+                  className="rounded-xl border border-border bg-card/60 p-4 space-y-2 flex flex-col justify-between"
                 >
-                  <span className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-baseline">
-                    <span className="text-foreground">
-                      {formatDateTime(run.timestamp)}
-                      {index === 0 ? " · Latest" : ""}
-                      {selectedRun?.id === run.id ? " · Showing" : ""}
-                    </span>
-                    <span className="text-muted-foreground">
-                      Ruleset {run.rulesetVersion} · Attention {run.summary.attention}{" "}
-                      · Insufficient {run.summary.insufficient_evidence} · Not
-                      assessed {run.summary.not_assessed} · Consistent{" "}
-                      {run.summary.consistent}
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                  <div className="space-y-1">
+                    <p className="font-semibold text-sm text-foreground flex items-center gap-1.5">
+                      <FileCheck className="size-4 text-primary shrink-0" />
+                      <span className="break-words">{item.displayName}</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {item.description || "Evidence record on file."}
+                    </p>
+                  </div>
 
-      <PreStocksReferencePanel opportunity={opportunity} />
+                  <div className="pt-2 border-t border-border/50 flex items-center justify-between text-xs">
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      {item.id}
+                    </span>
+                    <LinkButton
+                      href={`/opportunities/${opportunity.id}#structured-${item.id}`}
+                      variant="link"
+                      size="xs"
+                    >
+                      View structured details
+                    </LinkButton>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              title="No evidence records entered"
+              description="Checks run against claimed opportunity fields only. Missing structured values produce Insufficient evidence, not positive confirmation."
+              actions={
+                <LinkButton href={`/opportunities/${opportunity.id}#evidence`}>
+                  Attach evidence record
+                </LinkButton>
+              }
+            />
+          )}
+
+          {/* Progressive disclosure for readiness/completeness guide */}
+          <details className="group rounded-xl border border-border bg-card/30 p-3.5 transition-colors hover:bg-card/50">
+            <summary className="flex cursor-pointer items-center justify-between text-xs font-medium text-muted-foreground hover:text-foreground">
+              <span className="flex items-center gap-1.5">
+                <Layers className="size-3.5 text-primary" />
+                Input completeness guide (which structured values are filled)
+              </span>
+              <span className="text-primary text-[11px] group-open:hidden">
+                Show guide →
+              </span>
+              <span className="text-muted-foreground text-[11px] hidden group-open:inline">
+                Hide guide ↑
+              </span>
+            </summary>
+            <div className="mt-3 pt-3 border-t border-border/50">
+              <ReviewReadiness opportunity={opportunity} context="review" />
+            </div>
+          </details>
+        </section>
+
+        {/* SECTION 3: What VERIQ found */}
+        <section aria-labelledby="section-findings-heading" className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h2
+                id="section-findings-heading"
+                className="text-xs font-semibold uppercase tracking-wider text-primary"
+              >
+                Section 3 · Verification findings
+              </h2>
+              <p className="text-lg font-bold text-foreground">
+                What VERIQ found
+              </p>
+            </div>
+            {selectedRun ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={runChecks}
+                disabled={isRunning}
+              >
+                {isRunning ? "Re-running…" : "Re-run checks"}
+              </Button>
+            ) : null}
+          </div>
+
+          {!selectedRun ? (
+            <EmptyState
+              title="No review findings yet"
+              description="Click 'Run checks' above to evaluate what matches, what conflicts, and what information is still missing from the entered documents."
+              actions={
+                <Button type="button" onClick={runChecks} disabled={isRunning}>
+                  {isRunning ? "Running…" : "Run checks"}
+                </Button>
+              }
+            />
+          ) : (
+            <div className="space-y-6">
+              {/* Executive Plain English Summary */}
+              <ReviewReport companyName={opportunity.companyName} run={selectedRun} />
+
+              {/* Grouped Findings sorted by Attention -> Insufficient -> Not assessed -> Consistent */}
+              <div className="space-y-6">
+                {STATE_ORDER.map((state) => {
+                  const findings = selectedRun.findings.filter(
+                    (finding) => finding.state === state,
+                  );
+                  if (findings.length === 0) {
+                    return null;
+                  }
+                  return (
+                    <div key={state} className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">
+                          {verificationStateLabels[state]} ({findings.length})
+                        </h3>
+                        <span className="text-xs text-muted-foreground">
+                          {state === "attention" && "— Items that conflict or need your immediate attention"}
+                          {state === "insufficient_evidence" && "— Missing data needed to evaluate"}
+                          {state === "not_assessed" && "— Stated conditions not independently confirmed"}
+                          {state === "consistent" && "— Entered values align mathematically"}
+                        </span>
+                      </div>
+                      <ul className="space-y-3">
+                        {findings.map((finding) => (
+                          <FindingCard
+                            key={finding.id}
+                            finding={finding}
+                            opportunityId={opportunity.id}
+                            evidence={opportunity.evidence}
+                            inputSnapshot={selectedRun.inputSnapshot}
+                            evidenceCatalog={selectedRun.evidenceCatalog}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Progressive disclosure for finding state legend */}
+              <details className="group rounded-xl border border-border bg-card/30 p-3.5 transition-colors hover:bg-card/50">
+                <summary className="flex cursor-pointer items-center justify-between text-xs font-medium text-muted-foreground hover:text-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <Info className="size-3.5 text-primary" />
+                    Finding state definitions & legal boundaries
+                  </span>
+                  <span className="text-primary text-[11px] group-open:hidden">
+                    Show definitions →
+                  </span>
+                  <span className="text-muted-foreground text-[11px] hidden group-open:inline">
+                    Hide definitions ↑
+                  </span>
+                </summary>
+                <div className="mt-3 pt-3 border-t border-border/50">
+                  <FindingStateLegend />
+                </div>
+              </details>
+            </div>
+          )}
+        </section>
+
+        {/* SECTION 4: Run History */}
+        <section aria-labelledby="section-history-heading" className="space-y-3 pt-4 border-t border-border/70">
+          <div className="flex items-center gap-2">
+            <History className="size-4 text-primary" />
+            <SectionHeading
+              id="section-history-heading"
+              title="Review history"
+              description="Each run is saved in your local browser history. Earlier snapshots stay exactly as they were."
+            />
+          </div>
+          {runs.length === 0 ? (
+            <p className="text-xs text-muted-foreground">
+              No saved runs yet. Click &apos;Run checks&apos; to record your first snapshot.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {runs.map((run, index) => (
+                <li key={run.id}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRunId(run.id)}
+                    className={`w-full rounded-xl border p-3 text-left text-xs transition-colors hover:bg-muted/30 ${
+                      selectedRun?.id === run.id
+                        ? "border-primary/50 bg-primary/10"
+                        : "border-border bg-card/60"
+                    }`}
+                    aria-current={selectedRun?.id === run.id}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                      <span className="font-semibold text-foreground flex items-center gap-2">
+                        <span>{formatDateTime(run.timestamp)}</span>
+                        {index === 0 ? " · Latest" : ""}
+                        {selectedRun?.id === run.id ? " · Showing" : ""}
+                      </span>
+                      <span className="text-muted-foreground flex flex-wrap gap-2">
+                        Ruleset {run.rulesetVersion} · Attention {run.summary.attention}{" "}
+                        · Insufficient {run.summary.insufficient_evidence} · Not
+                        assessed {run.summary.not_assessed} · Consistent{" "}
+                        {run.summary.consistent}
+                      </span>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* SECTION 5: PreStocks Reference Panel (Secondary market context) */}
+        <div className="pt-4 border-t border-border/70">
+          <PreStocksReferencePanel opportunity={opportunity} />
+        </div>
+
+        {/* Consolidated Disclaimers at the bottom */}
+        <section className="pt-4 border-t border-border/80 space-y-3">
+          <DemoReviewNotice />
+          <PersistenceNotice />
+        </section>
+      </div>
     </PageContainer>
   );
 }
@@ -364,7 +565,9 @@ function SummaryField({ label, value }: { label: string; value: string }) {
       <dt className="text-[11px] tracking-wide text-muted-foreground uppercase">
         {label}
       </dt>
-      <dd className="mt-0.5 text-sm break-words text-foreground">{value}</dd>
+      <dd className="mt-0.5 text-sm font-medium break-words text-foreground">
+        {value}
+      </dd>
     </div>
   );
 }

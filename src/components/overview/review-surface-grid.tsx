@@ -9,15 +9,15 @@ export function ReviewSurfaceGrid() {
           id="review-surfaces-heading"
           className="text-xs font-semibold uppercase tracking-wider text-primary"
         >
-          Ruleset 2026.09.1
+          Verification rules
         </h2>
         <p className="text-xl font-bold tracking-tight text-foreground">
           Implemented checks · ruleset 2026.09.1
         </p>
         <p className="max-w-3xl text-xs leading-relaxed text-muted-foreground">
-          After you run checks, findings appear in the review workspace. They
-          compare entered claims with entered structured values. They do not
-          establish ownership, authenticity, or investment quality.
+          Five objective checks evaluate every opportunity. They compare entered deal
+          terms against structured evidence to spot discrepancies and missing fields
+          without guessing or hallucinating facts.
         </p>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
