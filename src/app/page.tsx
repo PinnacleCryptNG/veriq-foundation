@@ -6,6 +6,7 @@ import { HowItWorksSection } from "@/components/overview/how-it-works-section";
 import { ReviewSurfaceGrid } from "@/components/overview/review-surface-grid";
 import { PreStocksMarketContextCard } from "@/components/overview/prestocks-market-context-card";
 import { OverviewOpportunityQueue } from "@/components/overview/opportunity-queue";
+import { BuyerAudienceAndLimits } from "@/components/overview/buyer-audience-and-limits";
 import { ProductBriefing } from "@/components/overview/product-briefing";
 import { LimitationNotice } from "@/components/limitation-notice";
 import { PersistenceNotice } from "@/components/persistence-notice";
@@ -34,10 +35,13 @@ export default function OverviewPage() {
         <PreStocksMarketContextCard />
       </div>
 
-      {/* 6. Opportunity Queue (Fast access to Lumen Harbor & locally created opportunities) */}
+      {/* 6. Opportunity Queue (Fast access to Lumen Harbor & locally created deals) */}
       <OverviewOpportunityQueue />
 
-      {/* 7. Footer notices and collapsible technical specifications */}
+      {/* 7. Who is VERIQ for & What VERIQ is not */}
+      <BuyerAudienceAndLimits />
+
+      {/* 8. Footer notices and collapsible technical specifications */}
       <section className="space-y-3 pt-4 border-t border-border/80">
         <ProductBriefing compact />
         <div className="grid gap-3 sm:grid-cols-2">

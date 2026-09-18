@@ -2,7 +2,7 @@
 
 Spot the mismatches between what the seller told you and what the available evidence supports — before you send money.
 
-VERIQ is an evidence-based review workspace for **private and pre-IPO secondary opportunities**. Reviewers capture claimed deal terms, attach evidence documents, enter structured values, and run deterministic verification checks under ruleset **2026.09.1**.
+VERIQ is an evidence-based review workspace for **private and pre-IPO secondary deals**. Buyers and reviewers capture claimed deal terms, attach evidence documents, enter structured values, and run deterministic verification checks across five core buyer questions.
 
 This is an **objective diligence checklist**. It is not independent legal, financial, issuer, ownership, or document-authenticity verification. Submitted documents do not establish legal ownership, issuer approval, authenticity, or investment safety. Consistent findings do not mean an investment is safe or title is certified.
 
@@ -41,23 +41,23 @@ npm run build
 
 | Path | Purpose |
 | --- | --- |
-| `/` | Overview: product briefing, implemented checks, opportunity queue |
-| `/opportunities` | Demo and locally created opportunities |
-| `/opportunities/new` | Intake form |
-| `/opportunities/[id]` | Opportunity detail, evidence, structured values |
-| `/opportunities/[id]/review` | Deterministic review workspace |
-| `/prestocks` | Read-only PreStocks catalog (official list, validated server-side; freshness labeled) |
+| `/` | Overview: hero, condensed mismatch proof, 3-step workflow, checks, PreStocks context, Lumen guided demo |
+| `/opportunities` | Deals & Opportunities: filterable queue, example deal badges, expandable deal summaries |
+| `/opportunities/new` | Start a new deal check |
+| `/opportunities/[id]` | Deal detail, evidence, structured values |
+| `/opportunities/[id]/review` | Deterministic review workspace (claims, evidence, findings, history) |
+| `/prestocks` | PreStocks Catalog: read-only market reference, token/mark prices, technical disclosures |
 | `/prestocks/[symbol]` | One PreStocks catalog row as market reference |
 
-## Review checks (ruleset `2026.09.1`)
+## The Five Buyer Checks (ruleset `2026.09.1`)
 
-| ID | Check |
-| --- | --- |
-| R01 | Security representation consistency |
-| R02 | Transferability review |
-| R03 | Valuation reference context |
-| R04 | Transaction arithmetic (integer minor units, 1-cent tolerance) |
-| R05 | Evidence completeness |
+| Check | Question | ID |
+| --- | --- | --- |
+| Check 01 | Does the security match? | R01 |
+| Check 02 | Can you actually transfer it? | R02 |
+| Check 03 | Is the price consistent? | R03 |
+| Check 04 | Do the numbers add up? | R04 |
+| Check 05 | Is enough evidence present? | R05 |
 
 Findings use only **explicitly entered structured values**. Filenames, MIME types, descriptions, and file bytes are not read as document contents.
 

@@ -14,32 +14,33 @@ export function HomepageHero() {
       <div className="relative mx-auto max-w-3xl text-center space-y-5">
         <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-medium text-primary">
           <Sparkles className="size-3.5" />
-          <span>Private Market Secondary Due Diligence</span>
+          <span>Private-Market Deal Verification</span>
         </div>
 
+        {/* 1. H1 naming VERIQ and concrete problem in plain English */}
         <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl sm:leading-[1.15]">
-          Spot the mismatches before you send money.
+          VERIQ spots private-share deal mismatches before you send money.
         </h1>
 
+        {/* 2. Concise subheading: intended user + what they can do in 30 seconds */}
         <p className="text-base text-foreground/90 sm:text-lg sm:leading-relaxed font-normal">
+          Built for private-market buyers: cross-check seller claims against underlying documents, spot hidden SPV structures, and catch missing wire arithmetic in about 30 seconds.
+        </p>
+
+        {/* Supporting sentence explaining what VERIQ does */}
+        <p className="mx-auto max-w-2xl text-xs sm:text-sm text-muted-foreground leading-relaxed">
           Spot the mismatches between what the seller told you and what the available
           evidence supports — before you send money.
         </p>
 
-        <p className="mx-auto max-w-2xl text-xs sm:text-sm text-muted-foreground leading-relaxed">
-          See exactly what security, ownership, valuation, rights and transfer conditions
-          are supported by evidence. Built for individual buyers evaluating pre-IPO shares
-          or secondary deals, with an objective checklist for review desks.
-        </p>
-
-        {/* Action CTAs: Try the live demo is the featured primary action */}
+        {/* 3. Dominant primary CTA: Run the 2-minute demo now + secondary Start a new deal check */}
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <LinkButton
-            href={`/opportunities/${DEMO_SCENARIO_ID}`}
+            href={`/opportunities/${DEMO_SCENARIO_ID}/review`}
             size="lg"
-            className="h-11 px-6 text-sm font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/30"
+            className="h-12 px-7 text-sm font-semibold shadow-xl shadow-primary/25 hover:shadow-primary/35 hover:scale-[1.01] transition-all"
           >
-            Try the live demo
+            Run the 2-minute demo now
             <ArrowRight data-icon="inline-end" className="size-4" />
           </LinkButton>
 
@@ -47,26 +48,47 @@ export function HomepageHero() {
             href="/opportunities/new"
             variant="outline"
             size="lg"
-            className="h-11 px-6 text-sm font-medium"
+            className="h-12 px-6 text-sm font-medium border-border/80 hover:bg-muted/50"
           >
-            Start verification
+            Start a new deal check
           </LinkButton>
         </div>
 
-        {/* Reassuring trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 pt-3 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1.5">
-            <CheckCircle2 className="size-3.5 text-[#25D0A5]" />
-            Plain-English findings
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <CheckCircle2 className="size-3.5 text-primary" />
-            Zero AI guesswork
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <ShieldAlert className="size-3.5 text-[#F5B84B]" />
-            Independent evidence cross-check
-          </span>
+        <p className="text-xs text-muted-foreground">
+          Clicking opens the Lumen Harbor guided review with pre-loaded demo evidence. No signup or wallet required.
+        </p>
+
+        {/* 7. Three concise buyer benefits near hero */}
+        <div className="grid gap-3 pt-4 sm:grid-cols-3 text-left">
+          <div className="rounded-xl border border-border/80 bg-background/50 p-3.5 space-y-1">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+              <CheckCircle2 className="size-3.5 text-[#25D0A5] shrink-0" />
+              Know what you’re buying
+            </span>
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+              Catch whether you are receiving direct company stock or an indirect SPV membership unit with manager fees.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-border/80 bg-background/50 p-3.5 space-y-1">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+              <ShieldAlert className="size-3.5 text-[#F5B84B] shrink-0" />
+              Spot transfer lockups
+            </span>
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+              Find out if company approval or Right of First Refusal waivers are required before money leaves your account.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-border/80 bg-background/50 p-3.5 space-y-1">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+              <CheckCircle2 className="size-3.5 text-primary shrink-0" />
+              Audit the wire math
+            </span>
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+              Verify share quantity, unit price, and broker fees down to the exact penny before wiring capital.
+            </p>
+          </div>
         </div>
       </div>
     </section>

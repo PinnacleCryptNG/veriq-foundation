@@ -46,15 +46,23 @@ export function OpportunityTable({
                     <DemoBadge
                       label={
                         isDemoScenario(opportunity.id)
-                          ? "Synthetic demo scenario"
-                          : "Demo"
+                          ? "Example deal · Guided demo"
+                          : "Example deal"
                       }
                     />
                   ) : null}
                 </span>
-                <span className="max-w-xs text-xs leading-4 whitespace-normal break-words text-muted-foreground">
-                  {opportunity.claimedSummary}
-                </span>
+                {opportunity.claimedSummary ? (
+                  <details className="relative z-10 group text-xs text-muted-foreground mt-0.5">
+                    <summary className="cursor-pointer text-[11px] hover:text-foreground font-medium text-muted-foreground/90 list-none flex items-center gap-1">
+                      <span className="group-open:hidden">View deal summary & details ↓</span>
+                      <span className="hidden group-open:inline">Hide deal summary ↑</span>
+                    </summary>
+                    <p className="mt-1 p-2 rounded bg-muted/40 text-xs leading-relaxed max-w-sm">
+                      {opportunity.claimedSummary}
+                    </p>
+                  </details>
+                ) : null}
               </div>
             </TableCell>
             <TableCell className="text-muted-foreground">
@@ -88,20 +96,22 @@ export function OpportunityCards({
     <ul className="space-y-3">
       {opportunities.map((opportunity) => (
         <li key={opportunity.id}>
-          <Link
-            href={`/opportunities/${opportunity.id}`}
-            className="block rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted/30"
-          >
+          <div className="rounded-lg border border-border bg-card p-3 transition-colors hover:bg-muted/30">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="flex flex-wrap items-center gap-2 font-medium text-foreground">
-                  {opportunity.companyName}
+                  <Link
+                    href={`/opportunities/${opportunity.id}`}
+                    className="hover:underline font-semibold"
+                  >
+                    {opportunity.companyName}
+                  </Link>
                   {opportunity.isDemo ? (
                     <DemoBadge
                       label={
                         isDemoScenario(opportunity.id)
-                          ? "Synthetic demo scenario"
-                          : "Demo"
+                          ? "Example deal · Guided demo"
+                          : "Example deal"
                       }
                     />
                   ) : null}
@@ -112,15 +122,24 @@ export function OpportunityCards({
               </div>
               <StatusBadge status={opportunity.status} />
             </div>
-            <p className="mt-2 text-sm leading-5 break-words text-muted-foreground">
-              {opportunity.claimedSummary}
-            </p>
-            <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+
+            {opportunity.claimedSummary ? (
+              <details className="mt-2 text-xs text-muted-foreground">
+                <summary className="cursor-pointer text-[11px] hover:text-foreground font-medium text-muted-foreground/90">
+                  View deal summary ↓
+                </summary>
+                <p className="mt-1 text-xs leading-relaxed p-2 rounded bg-muted/30">
+                  {opportunity.claimedSummary}
+                </p>
+              </details>
+            ) : null}
+
+            <dl className="mt-3 grid grid-cols-2 gap-2 text-xs text-muted-foreground pt-2 border-t border-border/50">
               <div>
                 <dt className="text-[11px] tracking-wide uppercase">
                   Evidence records
                 </dt>
-                <dd className="mt-0.5 tabular-nums text-foreground">
+                <dd className="mt-0.5 tabular-nums text-foreground font-medium">
                   {opportunity.evidence.length}
                 </dd>
               </div>
@@ -135,7 +154,7 @@ export function OpportunityCards({
                 <dd className="mt-0.5 text-foreground">{opportunity.source}</dd>
               </div>
             </dl>
-          </Link>
+          </div>
         </li>
       ))}
     </ul>

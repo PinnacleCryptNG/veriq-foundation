@@ -161,7 +161,7 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
       {/* Page Header */}
       <PageHeader
         title={`Review · ${opportunity.companyName}`}
-        description="Verify this opportunity against entered evidence before sending money. Spot mismatches between seller promises and document terms."
+        description="Verify this deal against entered evidence before sending money. Spot mismatches between seller promises and document terms."
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={opportunity.status} />
@@ -169,8 +169,8 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
               <DemoBadge
                 label={
                   isDemoScenario(opportunity.id)
-                    ? "Synthetic demo scenario"
-                    : "Demo"
+                    ? "Example deal · Guided demo"
+                    : "Example deal"
                 }
               />
             ) : null}
@@ -183,7 +183,7 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
               {isRunning ? "Running…" : "Run checks"}
             </Button>
             <LinkButton href={`/opportunities/${opportunity.id}`} variant="outline">
-              Opportunity detail
+              Deal details
             </LinkButton>
             <LinkButton
               href={`/prestocks?opportunity=${opportunity.id}`}
@@ -235,12 +235,12 @@ export function ReviewWorkspace({ opportunityId }: { opportunityId: string }) {
               <Sparkles className="size-3.5" />
               Ready for Verification
             </div>
-            <h2 className="text-xl font-bold text-foreground">
-              Run checks to evaluate this opportunity
-            </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              VERIQ will compare the seller&apos;s claimed instrument, quantity, price, and payment terms against the entered structured evidence records.
-            </p>
+          <h2 className="text-xl font-bold text-foreground">
+            Run checks to evaluate this deal
+          </h2>
+          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            VERIQ will compare the seller&apos;s claimed instrument, quantity, price, and payment terms against the entered structured evidence records.
+          </p>
           </div>
           <Button
             type="button"

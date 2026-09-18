@@ -6,31 +6,32 @@ Do not treat this draft as a judging score or a guarantee of track eligibility. 
 
 ## Project name and one-line description
 
-**VERIQ** — a local, evidence-based review workspace that compares claimed private and pre-IPO equity terms with reviewer-entered structured evidence (ruleset 2026.09.1) and can attach a live PreStocks catalog row as labeled market context.
+**VERIQ** — a local, evidence-based deal review workspace that helps private-market buyers spot mismatches between seller claims and entered evidence before money changes hands, with optional PreStocks secondary benchmark context.
 
 ## Problem statement
 
-Private and pre-IPO opportunity packets mix claimed share classes, transfer language, valuation figures, and payment math. Reviewers often have to hold those comparisons in notes or spreadsheets, while filenames and PDFs get treated as if they had already been checked. Conflicts and missing fields are easy to miss, and a later edit can erase what was reviewed earlier.
+Private and pre-IPO opportunity packets mix claimed share classes, transfer language, valuation figures, and payment math. Buyers often have to hold those comparisons in notes or spreadsheets, while filenames and PDFs get treated as if they had already been checked. Conflicts and missing fields are easy to miss, and a later edit can erase what was reviewed earlier.
 
 ## Solution
 
-VERIQ lets a reviewer capture the claimed packet, attach evidence records, type structured values from those materials, and run a fixed ruleset. Findings cite the fields and evidence ids they used. Re-running checks appends a new snapshot; earlier runs stay in history. The engine does not read files, call issuers, or produce a score.
+VERIQ lets a buyer or reviewer capture what the seller said, attach or type the underlying paperwork, and see deal mismatches in plain English. Findings answer what was found, why it matters, and what to do next. Re-running checks appends a new snapshot; earlier runs stay in history. The engine does not read files, call issuers, or produce a score.
 
 Separately, VERIQ loads the official PreStocks catalog (read-only) so a reviewer can see token-market fields next to a claimed opportunity. That catalog is not evidence and does not change finding states.
 
 ## Intended users
 
-Analysts and reviewers who evaluate private-market or pre-IPO opportunity packets and need a repeatable comparison of claims vs entered evidence — not a substitute for legal, issuer, or investment sign-off.
+Individual secondary buyers evaluating pre-IPO shares, family offices conducting structured first-pass reviews, and brokers preparing transparent deal information.
 
 ## Core user workflow
 
-1. Open **Overview** (`/`) to see what VERIQ is, the five implemented checks, and the local queue.
-2. Open or create an **opportunity**. Seeded demo records are labeled Demo; Lumen Harbor Analytics is labeled a synthetic demo scenario.
-3. On the opportunity page, review claimed terms and enter structured values on evidence records. Input-completeness guidance lists missing fields per check.
-4. Open **Review workspace** and click **Run checks**.
-5. Read finding states (Attention, Insufficient evidence, Not assessed, Consistent). Follow **Open evidence record** / **Structured details** links.
-6. Edit a structured value, click **Run checks** again, then open the earlier snapshot in **Review history**.
-7. Optionally open **PreStocks**, pick a catalog row, and attach it as market context on the opportunity. Return via **Back to {company name}** (for Lumen: **Back to Lumen Harbor Analytics**) or **Return to review workspace**.
+1. Open **Overview** (`/`) to see the condensed Lumen Harbor mismatch proof, the 3-step workflow, and the live demo CTA.
+2. Click **Run the 2-minute demo now** to jump directly into the pre-loaded Lumen Harbor review.
+3. Review Section 1 (What the seller claims), Section 2 (What information or evidence was entered), and click **Run checks now**.
+4. Read plain-English findings answering: What was found, Why it matters, and What you can do. Expand technical details for exact rule IDs and compared values.
+5. Follow the walkthrough link to the transaction worksheet, enter stated payment **7225.00**, save, and run checks again.
+6. Open the earlier snapshot in **Review history** to confirm immutable historical record preservation.
+7. Optionally open **PreStocks**, browse tokens, and attach one as optional benchmark price context.
+8. Click **Start a new deal check** to run verification on your own transaction.
 
 ## Technical implementation
 

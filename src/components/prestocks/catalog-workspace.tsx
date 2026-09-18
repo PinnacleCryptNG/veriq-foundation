@@ -32,10 +32,11 @@ export function PreStocksCatalogWorkspace() {
   );
 
   return (
-    <PageContainer width="6xl">
+    <PageContainer width="6xl" className="space-y-6">
+      {/* 44 & 45. Buyer-focused PreStocks introduction with clear context line */}
       <PageHeader
-        title="PreStocks catalog"
-        description="Read-only market reference from the official PreStocks catalog. Browse tokens, then attach one as context on an opportunity. This is not trading, custody, or a review finding."
+        title="PreStocks Market Context"
+        description="Optional market price check — not part of the legal verification. Browse pre-IPO token prices to benchmark what secondary markets are quoting for comparable private companies."
         actions={
           <div className="flex flex-wrap gap-2">
             <Button type="button" variant="outline" onClick={() => void reload()}>
@@ -47,7 +48,7 @@ export function PreStocksCatalogWorkspace() {
               </LinkButton>
             ) : (
               <LinkButton href="/opportunities" variant="outline">
-                Back to opportunities
+                Back to deals
               </LinkButton>
             )}
           </div>
@@ -67,12 +68,13 @@ export function PreStocksCatalogWorkspace() {
           />
           {result.ok || result.assets.length > 0 ? (
             <>
+              {/* 48. Search placeholder examples */}
               <Field id="prestocks-search" label="Search catalog">
                 <Input
                   id="prestocks-search"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Symbol, name, or contract address"
+                  placeholder="e.g. Anthropic, Anduril, SpaceX (symbol, company, or token name)"
                 />
               </Field>
               {visible.length === 0 ? (

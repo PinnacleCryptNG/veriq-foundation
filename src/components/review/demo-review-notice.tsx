@@ -18,10 +18,7 @@ export function DemoReviewNotice({ className }: { className?: string }) {
         <span className="font-medium text-foreground">
           Demo review — not independent verification.{" "}
         </span>
-        Checks compare user-entered claims with explicitly entered structured
-        evidence values. They do not read documents, confirm authenticity,
-        determine ownership, or assess investment safety. Consistent findings
-        do not mean an opportunity is legitimate or safe.
+        VERIQ surfaces mismatches in the information you provide. It doesn’t invent facts, authenticate documents, confirm legal ownership, or replace a lawyer. Checks compare user-entered claims with explicitly entered structured values.
       </p>
     </div>
   );

@@ -242,7 +242,7 @@ export function OpportunityIntakeForm() {
 
       <div className="flex flex-wrap gap-2">
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving…" : "Save opportunity"}
+          {isSubmitting ? "Saving…" : "Save and add evidence"}
         </Button>
         <LinkButton href="/opportunities" variant="outline">
           Cancel

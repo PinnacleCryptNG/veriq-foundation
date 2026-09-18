@@ -89,8 +89,8 @@ export function OpportunityDetailPage({
               <DemoBadge
                 label={
                   isDemoScenario(opportunity.id)
-                    ? "Synthetic demo scenario"
-                    : "Demo"
+                    ? "Example deal · Guided demo"
+                    : "Example deal"
                 }
               />
             ) : null}
@@ -104,7 +104,7 @@ export function OpportunityDetailPage({
               PreStocks reference
             </LinkButton>
             <LinkButton href="/opportunities" variant="outline">
-              Back to opportunities
+              Back to deals
             </LinkButton>
           </div>
         }
@@ -131,7 +131,7 @@ export function OpportunityDetailPage({
       >
         <DetailCard
           id="company-heading"
-          title="Company and opportunity"
+          title="Company and deal terms"
           rows={[
             ["Company", opportunity.companyName],
             ["Security / interest", instrumentLabels[opportunity.instrument]],

@@ -55,8 +55,9 @@ export function lumenWalkthroughCopy(args: {
 
   if (!latestRun) {
     return {
-      title: "Next in the walkthrough",
-      body: "Run checks. Expect Attention, Consistent, and Insufficient evidence in one packet. That mix is not a verified, safe, or approved result.",
+    title: "Guided review ready to run",
+    body: "You are about to evaluate Lumen Harbor: 400 common shares offered at $18.00. Click 'Run checks' or 'Run checks now' below to compare seller claims with entered SPV paperwork and inspect the findings.",
+    action: "Run checks",
     };
   }
 

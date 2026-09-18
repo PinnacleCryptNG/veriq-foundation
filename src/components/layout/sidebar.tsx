@@ -4,15 +4,20 @@ import { SidebarNav } from "@/components/layout/sidebar-nav";
 
 export function Wordmark({ href = "/" }: { href?: string }) {
   return (
-    <Link href={href} className="flex items-center gap-2.5">
-      <span
-        aria-hidden="true"
-        className="size-2 rounded-sm bg-primary"
-      />
-      <span className="text-[13px] font-semibold tracking-[0.22em] text-foreground">
-        {siteConfig.name}
+    <div className="flex flex-col gap-0.5">
+      <Link href={href} className="flex items-center gap-2.5">
+        <span
+          aria-hidden="true"
+          className="size-2 rounded-sm bg-primary"
+        />
+        <span className="text-[13px] font-semibold tracking-[0.22em] text-foreground">
+          {siteConfig.name}
+        </span>
+      </Link>
+      <span className="text-[10px] text-muted-foreground leading-tight hidden sm:inline">
+        Deal mismatch verification
       </span>
-    </Link>
+    </div>
   );
 }
 

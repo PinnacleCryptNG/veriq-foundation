@@ -12,7 +12,7 @@ export function AssetSummary({
   actionLabel?: string;
 }) {
   return (
-    <article className="rounded-lg border border-border bg-card p-4">
+    <article className="rounded-xl border border-border bg-card p-4 space-y-3">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -23,14 +23,16 @@ export function AssetSummary({
           className="size-10 rounded-md border border-border object-cover"
         />
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-medium text-foreground">{asset.name}</h3>
-          <p className="text-xs text-muted-foreground">{asset.symbol}</p>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+          <h3 className="text-sm font-semibold text-foreground">{asset.name}</h3>
+          <p className="text-xs text-muted-foreground font-mono">{asset.symbol}</p>
+          <p className="mt-1.5 text-xs leading-5 text-muted-foreground line-clamp-3">
             {asset.description}
           </p>
         </div>
       </div>
-      <dl className="mt-3 grid gap-2 sm:grid-cols-2">
+
+      {/* 47. Buyer-facing pricing values visible by default */}
+      <dl className="grid gap-2 sm:grid-cols-2 pt-2 border-t border-border/60">
         <Field
           label="Token price (tokenPrice)"
           value={`$${formatCatalogNumber(asset.tokenPrice)}`}
@@ -47,23 +49,36 @@ export function AssetSummary({
           label="Mark valuation (markValuation)"
           value={`$${formatCatalogNumber(asset.markValuation)}`}
         />
-        <Field
-          label="Token supply (supply)"
-          value={formatCatalogNumber(asset.supply)}
-        />
-        <Field
-          label="Contract address"
-          value={asset.contract_address}
-          mono
-        />
       </dl>
-      <p className="mt-2 text-xs text-muted-foreground">
+
+      {/* 47. Raw technical details behind progressive disclosure */}
+      <details className="group rounded-lg border border-border/70 bg-background/50 p-2.5 text-xs text-muted-foreground">
+        <summary className="cursor-pointer font-medium text-muted-foreground hover:text-foreground flex items-center justify-between">
+          <span>Show technical details (supply & contract)</span>
+          <span className="text-[11px] text-primary group-open:hidden">Expand ↓</span>
+          <span className="text-[11px] text-muted-foreground hidden group-open:inline">Hide ↑</span>
+        </summary>
+        <dl className="mt-2.5 pt-2 border-t border-border/60 grid gap-2">
+          <Field
+            label="Token supply (supply)"
+            value={formatCatalogNumber(asset.supply)}
+          />
+          <Field
+            label="Contract address"
+            value={asset.contract_address}
+            mono
+          />
+        </dl>
+      </details>
+
+      <p className="text-[11px] text-muted-foreground leading-relaxed">
         PreStocks token prices track underlying SPVs holding private shares.
         Shown as secondary market benchmark context only.
       </p>
+
       {href ? (
-        <div className="mt-3">
-          <LinkButton href={href} size="sm">
+        <div className="pt-1">
+          <LinkButton href={href} size="sm" variant="outline">
             {actionLabel ?? "Open asset"}
           </LinkButton>
         </div>
@@ -87,7 +102,7 @@ function Field({
         {label}
       </dt>
       <dd
-        className={`mt-0.5 text-sm break-all text-foreground ${mono ? "font-mono text-xs" : ""}`}
+        className={`mt-0.5 text-sm break-all font-medium text-foreground ${mono ? "font-mono text-xs" : ""}`}
       >
         {value}
       </dd>

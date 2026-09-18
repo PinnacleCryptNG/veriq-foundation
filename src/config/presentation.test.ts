@@ -11,7 +11,7 @@ describe("hackathon presentation copy", () => {
       /verification|fraud-proof|trustless|guaranteed/,
     );
     expect(siteConfig.description.toLowerCase()).toContain("not independent verification");
-    expect(siteConfig.limitation.toLowerCase()).toMatch(/ownership|authenticity|investment safety/);
+    expect(siteConfig.limitation.toLowerCase()).toMatch(/surfaces mismatches|authenticity|lawyer/);
   });
 
   it("lists the five implemented ruleset checks", () => {

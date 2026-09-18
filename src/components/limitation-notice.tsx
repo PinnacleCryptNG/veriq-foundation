@@ -16,7 +16,7 @@ export function LimitationNotice({ className }: { className?: string }) {
         aria-hidden="true"
       />
       <p>
-        <span className="font-medium text-foreground">Limitation. </span>
+        <span className="font-medium text-foreground">How VERIQ protects you: </span>
         {siteConfig.limitation}
       </p>
     </div>

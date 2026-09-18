@@ -21,8 +21,8 @@ describe("Phase 1 homepage redesign verification", () => {
 
     // Primary & secondary CTAs
     expect(heroCode).toContain('href="/opportunities/new"');
-    expect(heroCode).toContain("Start verification");
-    expect(heroCode).toContain("Try the live demo");
+    expect(heroCode).toContain("Start a new deal check");
+    expect(heroCode).toContain("Run the 2-minute demo now");
   });
 
   it("includes clear example story with realistic synthetic scenario", () => {
@@ -31,8 +31,8 @@ describe("Phase 1 homepage redesign verification", () => {
       "utf8",
     );
 
-    expect(visualCode).toContain("What the seller pitched");
-    expect(visualCode).toContain("What evidence describes");
+    expect(visualCode).toContain("What the seller said");
+    expect(visualCode).toContain("What supplied information describes");
     expect(visualCode).toContain("What VERIQ spots");
     expect(visualCode).toContain("Security representation mismatch");
     expect(visualCode).toContain("How VERIQ protects you");
@@ -44,9 +44,9 @@ describe("Phase 1 homepage redesign verification", () => {
       "utf8",
     );
 
-    expect(howCode).toContain("Describe the opportunity");
-    expect(howCode).toContain("Add available evidence");
-    expect(howCode).toContain("Review findings & gaps");
+    expect(howCode).toContain("1. Paste what the seller told you");
+    expect(howCode).toContain("2. Attach or type the paperwork");
+    expect(howCode).toContain("3. See the mismatches in plain English");
   });
 
   it("keeps PreStocks as secondary market context", () => {
