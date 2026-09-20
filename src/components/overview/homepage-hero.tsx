@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, CheckCircle2, ShieldAlert } from "lucide-react";
+import { ArrowRight, BadgeCheck, CheckCircle2, ShieldAlert } from "lucide-react";
 import { DEMO_SCENARIO_ID } from "@/data/demo-opportunities";
 import { LinkButton } from "@/components/link-button";
 
@@ -13,7 +13,7 @@ export function HomepageHero() {
 
       <div className="relative mx-auto max-w-3xl text-center space-y-5">
         <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-medium text-primary">
-          <Sparkles className="size-3.5" />
+          <BadgeCheck className="size-3.5" />
           <span>Private-Market Deal Verification</span>
         </div>
 
@@ -34,11 +34,11 @@ export function HomepageHero() {
         </p>
 
         {/* 3. Dominant primary CTA: Run the 2-minute demo now + secondary Start a new deal check */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-col items-stretch justify-center gap-3 pt-2 sm:flex-row sm:items-center">
           <LinkButton
             href={`/opportunities/${DEMO_SCENARIO_ID}/review`}
             size="lg"
-            className="h-12 px-7 text-sm font-semibold shadow-xl shadow-primary/25 hover:shadow-primary/35 hover:scale-[1.01] transition-all"
+            className="h-12 w-full px-7 text-sm font-semibold shadow-xl shadow-primary/25 transition-all hover:scale-[1.01] hover:shadow-primary/35 sm:w-auto"
           >
             Run the 2-minute demo now
             <ArrowRight data-icon="inline-end" className="size-4" />
@@ -48,7 +48,7 @@ export function HomepageHero() {
             href="/opportunities/new"
             variant="outline"
             size="lg"
-            className="h-12 px-6 text-sm font-medium border-border/80 hover:bg-muted/50"
+            className="h-12 w-full px-6 text-sm font-medium border-border/80 hover:bg-muted/50 sm:w-auto"
           >
             Start a new deal check
           </LinkButton>
@@ -59,7 +59,7 @@ export function HomepageHero() {
         </p>
 
         {/* 7. Three concise buyer benefits near hero */}
-        <div className="grid gap-3 pt-4 sm:grid-cols-3 text-left">
+        <div className="grid gap-4 pt-5 text-left sm:grid-cols-3">
           <div className="rounded-xl border border-border/80 bg-background/50 p-3.5 space-y-1">
             <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
               <CheckCircle2 className="size-3.5 text-[#25D0A5] shrink-0" />

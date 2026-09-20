@@ -10,6 +10,7 @@ import { BuyerAudienceAndLimits } from "@/components/overview/buyer-audience-and
 import { ProductBriefing } from "@/components/overview/product-briefing";
 import { LimitationNotice } from "@/components/limitation-notice";
 import { PersistenceNotice } from "@/components/persistence-notice";
+import { VideoDemoSection } from "@/components/overview/video-demo-section";
 
 export const metadata: Metadata = {
   title: "Verify Private Equity Deals Before Buying",
@@ -17,9 +18,12 @@ export const metadata: Metadata = {
 
 export default function OverviewPage() {
   return (
-    <PageContainer width="6xl" className="space-y-10 sm:space-y-12">
+    <PageContainer width="6xl" className="space-y-12 sm:space-y-14">
       {/* 1. Clear, Buyer-Focused Hero */}
       <HomepageHero />
+
+      {/* An honest video destination, with the interactive example available now. */}
+      <VideoDemoSection />
 
       {/* 2. Above-the-fold Claim -> Evidence -> Result visual */}
       <VerificationFlowVisual />
