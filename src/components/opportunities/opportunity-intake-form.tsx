@@ -77,8 +77,8 @@ export function OpportunityIntakeForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={onSubmit} noValidate className="space-y-7">
+      <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2">
         <Field
           id="companyName"
           label="Company name"
@@ -240,7 +240,7 @@ export function OpportunityIntakeForm() {
         </p>
       ) : null}
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col gap-3 border-t border-border/70 pt-5 sm:flex-row">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Saving…" : "Save and add evidence"}
         </Button>

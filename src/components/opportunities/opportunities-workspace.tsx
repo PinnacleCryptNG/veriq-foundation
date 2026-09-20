@@ -12,7 +12,7 @@ import {
   OpportunityTable,
 } from "@/components/opportunities/opportunity-list";
 import { useOpportunities } from "@/hooks/use-opportunities";
-import { Sparkles, Filter, Info } from "lucide-react";
+import { FlaskConical, Filter, Info } from "lucide-react";
 
 export function OpportunitiesWorkspace() {
   const { opportunities, isLoading, warning, persistError } = useOpportunities();
@@ -28,7 +28,7 @@ export function OpportunitiesWorkspace() {
   });
 
   return (
-    <PageContainer width="6xl" className="space-y-6">
+    <PageContainer width="6xl" className="space-y-8">
       {/* 36. Value-led title and introduction */}
       <PageHeader
         title="Private-Market Deals"
@@ -39,8 +39,8 @@ export function OpportunitiesWorkspace() {
               href={`/opportunities/${DEMO_SCENARIO_ID}/review`}
               variant="outline"
             >
-              <Sparkles className="size-3.5 text-primary mr-1" />
-              Run Lumen demo
+              <FlaskConical className="mr-1 size-3.5 text-primary" />
+              Use example data
             </LinkButton>
             <LinkButton href="/opportunities/new">
               Start a new deal check
@@ -56,8 +56,8 @@ export function OpportunitiesWorkspace() {
       {persistError ? <Banner tone="danger">{persistError}</Banner> : null}
 
       {/* 38. Filter and quick-start demo banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-border bg-card/60 p-3.5 text-xs">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-4 rounded-xl border border-border bg-card/60 p-4 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <Filter className="size-3.5 text-muted-foreground" />
           <span className="font-semibold text-foreground">Filter deals:</span>
           <div className="flex rounded-md border border-border bg-background p-0.5">

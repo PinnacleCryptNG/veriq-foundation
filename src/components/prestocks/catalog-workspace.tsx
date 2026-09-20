@@ -32,7 +32,7 @@ export function PreStocksCatalogWorkspace() {
   );
 
   return (
-    <PageContainer width="6xl" className="space-y-6">
+    <PageContainer width="6xl" className="space-y-8">
       {/* 44 & 45. Buyer-focused PreStocks introduction with clear context line */}
       <PageHeader
         title="PreStocks Market Context"
@@ -91,7 +91,7 @@ export function PreStocksCatalogWorkspace() {
                   }
                 />
               ) : (
-                <ul className="grid gap-3 lg:grid-cols-2">
+                <ul className="grid gap-5 lg:grid-cols-2">
                   {visible.map((asset) => (
                     <li key={asset.symbol} className="space-y-2">
                       <AssetSummary
